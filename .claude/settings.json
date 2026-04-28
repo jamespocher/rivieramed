@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/JamesPocher/.nvm/versions/**)",
+      "Read(//Users/JamesPocher/.volta/**)",
+      "Read(//Users/JamesPocher/.bun/**)"
+    ]
+  }
+}

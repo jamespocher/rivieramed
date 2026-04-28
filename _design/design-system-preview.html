@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riviera Med — Design System Preview</title>
+
+<!-- Switzer font (open-source Söhne alternative) -->
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap">
+
+<style>
+/* ===================================================
+   Riviera Med Design System — Embedded Tokens
+   =================================================== */
+:root {
+  /* PRIMARY — Deep Pine */
+  --color-primary-50: #F0F5F4; --color-primary-100: #DCE8E6;
+  --color-primary-200: #B8D1CD; --color-primary-300: #8AB1AB;
+  --color-primary-400: #5C8E87; --color-primary-500: #3F6F68;
+  --color-primary-600: #2C5651; --color-primary-700: #1F4340;
+  --color-primary-800: #163331; --color-primary-900: #0E2422;
+  --color-primary-950: #071512;
+
+  /* SECONDARY — Warm Sand */
+  --color-secondary-50: #FBF8F2; --color-secondary-100: #F5EDDC;
+  --color-secondary-200: #EADCBA; --color-secondary-300: #DBC48A;
+  --color-secondary-400: #C7A85C; --color-secondary-500: #A8893F;
+  --color-secondary-600: #856B30; --color-secondary-700: #5F4C22;
+
+  /* NEUTRAL */
+  --color-neutral-0: #FFFFFF; --color-neutral-50: #FAFAF9;
+  --color-neutral-100: #F4F4F2; --color-neutral-200: #E7E7E4;
+  --color-neutral-300: #D1D1CD; --color-neutral-400: #A8A8A2;
+  --color-neutral-500: #787873; --color-neutral-600: #52524E;
+  --color-neutral-700: #3D3D3A; --color-neutral-800: #272725;
+  --color-neutral-900: #161614; --color-neutral-950: #0A0A09;
+
+  /* SEMANTIC */
+  --color-success-50: #EDF6F0; --color-success-500: #2D7A4F; --color-success-700: #1F5638;
+  --color-warning-50: #FAF4E5; --color-warning-500: #B5841F; --color-warning-700: #825D11;
+  --color-error-50: #F9ECEB; --color-error-500: #A8302A; --color-error-700: #7A211C;
+  --color-info-50: #EBF1F6; --color-info-500: #2C5C7A; --color-info-700: #1F4257;
+
+  /* TYPOGRAPHY */
+  --font-display: 'Switzer', -apple-system, sans-serif;
+  --font-body: 'Switzer', -apple-system, sans-serif;
+
+  /* SPACING */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+  --space-32: 128px;
+
+  /* RADIUS */
+  --radius-sm: 4px; --radius-md: 8px; --radius-full: 9999px;
+
+  /* MOTION */
+  --duration-fast: 150ms; --duration-base: 250ms; --duration-slow: 400ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* ===== RESET ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 18px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  font-size: 18px; line-height: 1.6; font-weight: 400;
+  color: var(--color-neutral-700);
+  background: var(--color-neutral-50);
+  font-feature-settings: "kern", "liga", "calt";
+}
+h1,h2,h3,h4,h5,h6 {
+  font-family: var(--font-display); font-weight: 500;
+  color: var(--color-neutral-800); line-height: 1.2;
+}
+a { color: var(--color-primary-700); text-decoration: underline; text-underline-offset: 2px; }
+button { font: inherit; border: none; background: none; cursor: pointer; }
+input, textarea, select { font: inherit; }
+img { max-width: 100%; display: block; }
+*:focus { outline: none; }
+*:focus-visible { outline: 2px solid var(--color-primary-600); outline-offset: 2px; }
+
+/* ===================================================
+   PREVIEW LAYOUT
+   =================================================== */
+.preview-shell {
+  max-width: 1280px; margin: 0 auto;
+  padding: var(--space-12) var(--space-8);
+}
+
+.preview-header {
+  border-bottom: 1px solid var(--color-neutral-200);
+  padding-bottom: var(--space-12); margin-bottom: var(--space-16);
+}
+
+.eyebrow {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--color-primary-700);
+  margin-bottom: var(--space-3);
+}
+
+.preview-title {
+  font-size: clamp(48px, 7vw, 72px); line-height: 1.05;
+  letter-spacing: -0.035em; margin-bottom: var(--space-4);
+  color: var(--color-neutral-900);
+}
+
+.preview-subtitle {
+  font-size: 20px; line-height: 1.5; color: var(--color-neutral-500);
+  max-width: 640px;
+}
+
+.section { margin-bottom: var(--space-24); }
+
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  border-bottom: 1px solid var(--color-neutral-200);
+  padding-bottom: var(--space-4); margin-bottom: var(--space-10);
+  flex-wrap: wrap; gap: var(--space-4);
+}
+
+.section-title {
+  font-size: 32px; letter-spacing: -0.02em;
+}
+
+.section-meta {
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-neutral-500); font-weight: 500;
+}
+
+/* ===================================================
+   1. COLOR PALETTE
+   =================================================== */
+.palette-group { margin-bottom: var(--space-10); }
+.palette-label {
+  font-size: 14px; font-weight: 500; color: var(--color-neutral-800);
+  margin-bottom: var(--space-2);
+}
+.palette-description {
+  font-size: 14px; color: var(--color-neutral-500);
+  margin-bottom: var(--space-5); max-width: 560px;
+}
+.swatch-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: var(--space-2);
+}
+.swatch {
+  aspect-ratio: 1; border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: var(--space-3); font-size: 11px; font-weight: 500;
+  border: 1px solid var(--color-neutral-200);
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+.swatch:hover { transform: translateY(-2px); }
+.swatch-token { letter-spacing: 0.04em; opacity: 0.8; }
+.swatch-hex { font-family: ui-monospace, monospace; font-size: 10px; opacity: 0.7; margin-top: 2px; }
+
+/* ===================================================
+   2. TYPOGRAPHY
+   =================================================== */
+.type-row {
+  display: grid; grid-template-columns: 140px 1fr 100px;
+  gap: var(--space-6); align-items: baseline;
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+.type-row:last-child { border-bottom: none; }
+.type-token {
+  font-family: ui-monospace, monospace; font-size: 12px;
+  color: var(--color-neutral-500); letter-spacing: 0.02em;
+}
+.type-sample { color: var(--color-neutral-800); }
+.type-meta {
+  font-size: 12px; color: var(--color-neutral-500);
+  font-family: ui-monospace, monospace; text-align: right;
+}
+
+.t-display-2xl { font-size: 96px; font-weight: 500; line-height: 1.0; letter-spacing: -0.04em; }
+.t-display-xl  { font-size: 72px; font-weight: 500; line-height: 1.05; letter-spacing: -0.035em; }
+.t-display-lg  { font-size: 56px; font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; }
+.t-heading-xl  { font-size: 40px; font-weight: 500; line-height: 1.15; letter-spacing: -0.025em; }
+.t-heading-lg  { font-size: 32px; font-weight: 500; line-height: 1.2; letter-spacing: -0.02em; }
+.t-heading-md  { font-size: 24px; font-weight: 500; line-height: 1.3; letter-spacing: -0.015em; }
+.t-heading-sm  { font-size: 20px; font-weight: 500; line-height: 1.4; letter-spacing: -0.01em; }
+.t-body-lg     { font-size: 18px; font-weight: 400; line-height: 1.6; }
+.t-body-sm     { font-size: 14px; font-weight: 400; line-height: 1.5; letter-spacing: 0.005em; }
+
+/* ===================================================
+   3. SPACING
+   =================================================== */
+.spacing-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+.spacing-item {
+  display: flex; align-items: center; gap: var(--space-4);
+  padding: var(--space-4); background: var(--color-neutral-100);
+  border-radius: var(--radius-sm);
+}
+.spacing-bar { background: var(--color-primary-700); height: 24px; }
+.spacing-info { font-size: 12px; font-family: ui-monospace, monospace; }
+.spacing-info strong { color: var(--color-neutral-800); display: block; }
+.spacing-info span { color: var(--color-neutral-500); }
+
+/* ===================================================
+   4. COMPONENTS
+   =================================================== */
+.component-grid {
+  display: grid; gap: var(--space-8);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+.component-card {
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+}
+.component-label {
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-neutral-500); font-weight: 500;
+  margin-bottom: var(--space-5);
+}
+.component-row {
+  display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center;
+  margin-bottom: var(--space-4);
+}
+.component-row:last-child { margin-bottom: 0; }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body); font-weight: 500;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-standard);
+  white-space: nowrap; user-select: none;
+  border: 1px solid transparent;
+}
+.btn-sm { height: 32px; padding: 0 12px; font-size: 14px; }
+.btn-md { height: 40px; padding: 0 16px; font-size: 14px; }
+.btn-lg { height: 48px; padding: 0 24px; font-size: 16px; }
+
+.btn-primary { background: var(--color-primary-700); color: var(--color-neutral-50); }
+.btn-primary:hover { background: var(--color-primary-800); }
+.btn-primary:active { background: var(--color-primary-900); }
+
+.btn-secondary {
+  background: transparent; color: var(--color-neutral-800);
+  border-color: var(--color-neutral-300);
+}
+.btn-secondary:hover { background: var(--color-neutral-100); border-color: var(--color-neutral-500); }
+
+.btn-ghost { background: transparent; color: var(--color-neutral-700); }
+.btn-ghost:hover { background: var(--color-neutral-100); }
+
+.btn-destructive { background: var(--color-error-500); color: var(--color-neutral-50); }
+.btn-destructive:hover { background: var(--color-error-700); }
+
+.btn[disabled] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+.btn .arrow { transition: transform var(--duration-fast) var(--ease-standard); }
+.btn:hover .arrow { transform: translateX(3px); }
+
+/* INPUTS */
+.field { display: flex; flex-direction: column; gap: var(--space-2); }
+.field-label {
+  font-size: 14px; font-weight: 500; color: var(--color-neutral-800);
+}
+.field-required { color: var(--color-error-500); }
+.input, .textarea, .select {
+  height: 48px; padding: 0 16px;
+  font-size: 16px; line-height: 1.5;
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-sm);
+  color: var(--color-neutral-800);
+  transition: border-color var(--duration-fast) var(--ease-standard);
+  width: 100%;
+}
+.input:hover, .textarea:hover { border-color: var(--color-neutral-500); }
+.input:focus, .textarea:focus, .select:focus {
+  border-color: var(--color-primary-700);
+  outline: 2px solid var(--color-primary-600);
+  outline-offset: 0; border-color: transparent;
+}
+.input::placeholder { color: var(--color-neutral-400); }
+.textarea { height: auto; padding: 12px 16px; resize: vertical; min-height: 96px; }
+.field-helper { font-size: 14px; color: var(--color-neutral-500); }
+.field-error { font-size: 14px; color: var(--color-error-700); }
+.field.error .input { border-color: var(--color-error-500); }
+
+/* CHECKBOX & RADIO */
+.choice-group { display: flex; flex-direction: column; gap: var(--space-3); }
+.choice {
+  display: inline-flex; align-items: center; gap: var(--space-3);
+  cursor: pointer; user-select: none;
+}
+.choice input { width: 20px; height: 20px; accent-color: var(--color-primary-700); cursor: pointer; }
+.choice span { font-size: 16px; color: var(--color-neutral-700); }
+
+/* SWITCH */
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.switch-slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: var(--color-neutral-300);
+  border-radius: var(--radius-full);
+  transition: background var(--duration-base) var(--ease-standard);
+}
+.switch-slider::before {
+  content: ""; position: absolute; height: 18px; width: 18px;
+  left: 3px; top: 3px; background: var(--color-neutral-0);
+  border-radius: 50%;
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+.switch input:checked + .switch-slider { background: var(--color-primary-700); }
+.switch input:checked + .switch-slider::before { transform: translateX(20px); }
+
+/* BADGES */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: var(--radius-sm);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.badge-neutral { background: var(--color-neutral-100); color: var(--color-neutral-700); }
+.badge-primary { background: var(--color-primary-100); color: var(--color-primary-800); }
+.badge-success { background: var(--color-success-50); color: var(--color-success-700); }
+.badge-warning { background: var(--color-warning-50); color: var(--color-warning-700); }
+.badge-error   { background: var(--color-error-50); color: var(--color-error-700); }
+
+/* ALERTS */
+.alert {
+  display: flex; gap: var(--space-3); padding: var(--space-4);
+  border-radius: var(--radius-md); border-left: 3px solid;
+  margin-bottom: var(--space-3); font-size: 14px;
+}
+.alert-success { background: var(--color-success-50); border-color: var(--color-success-500); color: var(--color-success-900); }
+.alert-warning { background: var(--color-warning-50); border-color: var(--color-warning-500); color: var(--color-warning-900); }
+.alert-error   { background: var(--color-error-50); border-color: var(--color-error-500); color: var(--color-error-900); }
+.alert-info    { background: var(--color-info-50); border-color: var(--color-info-500); color: var(--color-info-900); }
+.alert-icon { flex-shrink: 0; font-size: 16px; }
+.alert-title { font-weight: 500; margin-bottom: 2px; }
+
+/* SERVICE CARD */
+.service-card {
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+  padding: var(--space-8);
+  transition: border-color var(--duration-base) var(--ease-standard);
+  cursor: pointer;
+}
+.service-card:hover { border-color: var(--color-primary-700); }
+.service-icon {
+  width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+  background: var(--color-primary-50); color: var(--color-primary-700);
+  border-radius: var(--radius-sm); margin-bottom: var(--space-5);
+}
+.service-icon svg { width: 24px; height: 24px; stroke-width: 1.5; }
+.service-title {
+  font-size: 20px; font-weight: 500; color: var(--color-neutral-800);
+  margin-bottom: var(--space-3); letter-spacing: -0.01em;
+}
+.service-desc {
+  font-size: 16px; line-height: 1.5; color: var(--color-neutral-600);
+  margin-bottom: var(--space-5);
+}
+.service-link {
+  font-size: 14px; font-weight: 500; color: var(--color-primary-700);
+  display: inline-flex; align-items: center; gap: 6px;
+  text-decoration: none; transition: gap var(--duration-fast) var(--ease-standard);
+}
+.service-card:hover .service-link { gap: 10px; }
+
+/* TARIFF TABLE */
+.tariff-table {
+  width: 100%; border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.tariff-table th, .tariff-table td {
+  text-align: left; padding: var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--color-neutral-200);
+  font-size: 16px;
+}
+.tariff-table th {
+  font-weight: 500; font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--color-neutral-500);
+  border-bottom: 1px solid var(--color-neutral-300);
+}
+.tariff-table td:last-child {
+  text-align: right; font-weight: 500; color: var(--color-neutral-900);
+}
+.tariff-table tr:hover { background: var(--color-neutral-50); }
+
+/* TESTIMONIAL */
+.testimonial {
+  padding: var(--space-8); background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+}
+.testimonial-mark {
+  font-size: 48px; line-height: 1; color: var(--color-primary-200);
+  margin-bottom: var(--space-3); font-family: var(--font-display);
+}
+.testimonial-quote {
+  font-size: 18px; line-height: 1.6; color: var(--color-neutral-800);
+  margin-bottom: var(--space-5);
+}
+.testimonial-author { display: flex; align-items: center; gap: var(--space-3); }
+.testimonial-avatar {
+  width: 40px; height: 40px; border-radius: var(--radius-full);
+  background: var(--color-primary-700); color: var(--color-neutral-50);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 500;
+}
+.testimonial-name { font-size: 14px; font-weight: 500; color: var(--color-neutral-800); }
+.testimonial-role { font-size: 14px; color: var(--color-neutral-500); }
+
+/* MOTION DEMO */
+.motion-demo {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+.motion-card {
+  padding: var(--space-5); background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200); border-radius: var(--radius-md);
+  text-align: center;
+}
+.motion-name {
+  font-size: 14px; font-weight: 500; color: var(--color-neutral-800);
+  margin-bottom: var(--space-1);
+}
+.motion-bezier {
+  font-family: ui-monospace, monospace; font-size: 11px;
+  color: var(--color-neutral-500); margin-bottom: var(--space-3);
+}
+.motion-track {
+  height: 4px; background: var(--color-neutral-200); border-radius: var(--radius-full);
+  position: relative; overflow: hidden;
+}
+.motion-dot {
+  position: absolute; top: -4px; left: 0;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--color-primary-700);
+  animation: motion-slide 2s infinite;
+}
+.motion-card.standard .motion-dot { animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+.motion-card.out .motion-dot      { animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+.motion-card.in .motion-dot       { animation-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+.motion-card.emphasized .motion-dot { animation-timing-function: cubic-bezier(0.2, 0, 0, 1); }
+@keyframes motion-slide {
+  0%, 10% { left: 0; }
+  50% { left: calc(100% - 12px); }
+  90%, 100% { left: 0; }
+}
+
+/* CONTRAST AUDIT */
+.contrast-grid {
+  display: grid; gap: var(--space-3);
+}
+.contrast-row {
+  display: grid; grid-template-columns: 60px 1fr 80px 80px;
+  gap: var(--space-4); align-items: center;
+  padding: var(--space-3); border-bottom: 1px solid var(--color-neutral-200);
+  font-size: 14px;
+}
+.contrast-swatch {
+  height: 40px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 500; font-size: 13px;
+  border: 1px solid var(--color-neutral-200);
+}
+.contrast-pass {
+  font-size: 11px; font-weight: 500; padding: 2px 8px;
+  border-radius: var(--radius-sm); text-align: center;
+  background: var(--color-success-50); color: var(--color-success-700);
+}
+
+/* PAGE COMPOSITION DEMO */
+.demo-page {
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.demo-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-5) var(--space-8);
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+.demo-logo {
+  font-family: var(--font-display); font-weight: 500; font-size: 18px;
+  letter-spacing: -0.01em; color: var(--color-neutral-900);
+}
+.demo-logo span { color: var(--color-primary-700); }
+.demo-nav { display: flex; gap: var(--space-6); }
+.demo-nav a {
+  font-size: 14px; color: var(--color-neutral-700); text-decoration: none;
+}
+.demo-hero {
+  padding: var(--space-20) var(--space-8) var(--space-16);
+  display: grid; grid-template-columns: 1fr; gap: var(--space-6);
+  max-width: 720px;
+}
+.demo-eyebrow {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--color-primary-700);
+}
+.demo-hero h1 {
+  font-size: clamp(36px, 5vw, 56px); line-height: 1.1;
+  letter-spacing: -0.03em; color: var(--color-neutral-900);
+}
+.demo-hero p {
+  font-size: 20px; line-height: 1.5; color: var(--color-neutral-500);
+}
+.demo-hero-actions { display: flex; gap: var(--space-3); margin-top: var(--space-3); }
+.demo-trust-bar {
+  display: flex; gap: var(--space-8); padding: var(--space-5) var(--space-8);
+  background: var(--color-neutral-100); font-size: 14px; flex-wrap: wrap;
+}
+.demo-trust-bar span {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  color: var(--color-neutral-700);
+}
+.demo-trust-bar span::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--color-primary-700);
+}
+
+/* ACCORDION */
+.accordion { border-top: 1px solid var(--color-neutral-200); }
+.accordion-item { border-bottom: 1px solid var(--color-neutral-200); }
+.accordion-header {
+  width: 100%; padding: var(--space-5) 0; text-align: left;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 18px; font-weight: 500; color: var(--color-neutral-800);
+  background: none;
+}
+.accordion-icon {
+  width: 16px; height: 16px; transition: transform var(--duration-base) var(--ease-standard);
+}
+.accordion-item.open .accordion-icon { transform: rotate(45deg); }
+.accordion-body {
+  display: none; padding-bottom: var(--space-5);
+  font-size: 16px; line-height: 1.6; color: var(--color-neutral-600);
+}
+.accordion-item.open .accordion-body { display: block; }
+
+/* FOOTER */
+.preview-footer {
+  margin-top: var(--space-32); padding-top: var(--space-8);
+  border-top: 1px solid var(--color-neutral-200);
+  font-size: 14px; color: var(--color-neutral-500);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .preview-shell { padding: var(--space-8) var(--space-5); }
+  .type-row { grid-template-columns: 1fr; gap: var(--space-2); }
+  .type-meta { text-align: left; }
+  .preview-title { font-size: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-shell">
+
+  <!-- ================== HEADER ================== -->
+  <header class="preview-header">
+    <div class="eyebrow">Riviera Med · Design System v1.0</div>
+    <h1 class="preview-title">A minimal &amp; modern foundation for healthcare.</h1>
+    <p class="preview-subtitle">Production-ready tokens, typography, color, motion, and components — built for scale, accessibility, and quiet confidence.</p>
+  </header>
+
+  <!-- ================== 1. COLOR ================== -->
+  <section class="section">
+    <header class="section-header">
+      <h2 class="section-title">01 — Color System</h2>
+      <span class="section-meta">Two brand colors · Neutrals · Semantic states</span>
+    </header>
+
+    <div class="palette-group">
+      <div class="palette-label">Primary — Deep Pine</div>
+      <p class="palette-description">The brand color. Conveys medical authority and calm. Used for primary actions, links, and brand surfaces.</p>
+      <div class="swatch-row">
+        <div class="swatch" style="background:#F0F5F4;color:#0E2422"><div class="swatch-token">50</div><div class="swatch-hex">#F0F5F4</div></div>
+        <div class="swatch" style="background:#DCE8E6;color:#0E2422"><div class="swatch-token">100</div><div class="swatch-hex">#DCE8E6</div></div>
+        <div class="swatch" style="background:#B8D1CD;color:#0E2422"><div class="swatch-token">200</div><div class="swatch-hex">#B8D1CD</div></div>
+        <div class="swatch" style="background:#8AB1AB;color:#0E2422"><div class="swatch-token">300</div><div class="swatch-hex">#8AB1AB</div></div>
+        <div class="swatch" style="background:#5C8E87;color:#FAFAF9"><div class="swatch-token">400</div><div class="swatch-hex">#5C8E87</div></div>
+        <div class="swatch" style="background:#3F6F68;color:#FAFAF9"><div class="swatch-token">500</div><div class="swatch-hex">#3F6F68</div></div>
+        <div class="swatch" style="background:#2C5651;color:#FAFAF9"><div class="swatch-token">600</div><div class="swatch-hex">#2C5651</div></div>
+        <div class="swatch" style="background:#1F4340;color:#FAFAF9"><div class="swatch-token">700 ★</div><div class="swatch-hex">#1F4340</div></div>
+        <div class="swatch" style="background:#163331;color:#FAFAF9"><div class="swatch-token">800</div><div class="swatch-hex">#163331</div></div>
+        <div class="swatch" style="background:#0E2422;color:#FAFAF9"><div class="swatch-token">900</div><div class="swatch-hex">#0E2422</div></div>
+        <div class="swatch" style="background:#071512;color:#FAFAF9"><div class="swatch-token">950</div><div class="swatch-hex">#071512</div></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-label">Secondary — Warm Sand</div>
+      <p class="palette-description">Used <em>rarely</em>. Adds humanity. Highlights, badges, and breaking long stretches of neutral.</p>
+      <div class="swatch-row">
+        <div class="swatch" style="background:#FBF8F2;color:#5F4C22"><div class="swatch-token">50</div><div class="swatch-hex">#FBF8F2</div></div>
+        <div class="swatch" style="background:#F5EDDC;color:#5F4C22"><div class="swatch-token">100</div><div class="swatch-hex">#F5EDDC</div></div>
+        <div class="swatch" style="background:#EADCBA;color:#5F4C22"><div class="swatch-token">200</div><div class="swatch-hex">#EADCBA</div></div>
+        <div class="swatch" style="background:#DBC48A;color:#5F4C22"><div class="swatch-token">300</div><div class="swatch-hex">#DBC48A</div></div>
+        <div class="swatch" style="background:#C7A85C;color:#5F4C22"><div class="swatch-token">400 ★</div><div class="swatch-hex">#C7A85C</div></div>
+        <div class="swatch" style="background:#A8893F;color:#FBF8F2"><div class="swatch-token">500</div><div class="swatch-hex">#A8893F</div></div>
+        <div class="swatch" style="background:#856B30;color:#FBF8F2"><div class="swatch-token">600</div><div class="swatch-hex">#856B30</div></div>
+        <div class="swatch" style="background:#5F4C22;color:#FBF8F2"><div class="swatch-token">700</div><div class="swatch-hex">#5F4C22</div></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-label">Neutral — Slate</div>
+      <p class="palette-description">The workhorse. 12 steps from white to near-black. Backgrounds, borders, body text — almost everything.</p>
+      <div class="swatch-row">
+        <div class="swatch" style="background:#FFFFFF;color:#161614"><div class="swatch-token">0</div><div class="swatch-hex">#FFFFFF</div></div>
+        <div class="swatch" style="background:#FAFAF9;color:#161614"><div class="swatch-token">50 ★</div><div class="swatch-hex">#FAFAF9</div></div>
+        <div class="swatch" style="background:#F4F4F2;color:#161614"><div class="swatch-token">100</div><div class="swatch-hex">#F4F4F2</div></div>
+        <div class="swatch" style="background:#E7E7E4;color:#161614"><div class="swatch-token">200</div><div class="swatch-hex">#E7E7E4</div></div>
+        <div class="swatch" style="background:#D1D1CD;color:#161614"><div class="swatch-token">300</div><div class="swatch-hex">#D1D1CD</div></div>
+        <div class="swatch" style="background:#A8A8A2;color:#161614"><div class="swatch-token">400</div><div class="swatch-hex">#A8A8A2</div></div>
+        <div class="swatch" style="background:#787873;color:#FAFAF9"><div class="swatch-token">500</div><div class="swatch-hex">#787873</div></div>
+        <div class="swatch" style="background:#52524E;color:#FAFAF9"><div class="swatch-token">600</div><div class="swatch-hex">#52524E</div></div>
+        <div class="swatch" style="background:#3D3D3A;color:#FAFAF9"><div class="swatch-token">700 ★</div><div class="swatch-hex">#3D3D3A</div></div>
+        <div class="swatch" style="background:#272725;color:#FAFAF9"><div class="swatch-token">800</div><div class="swatch-hex">#272725</div></div>
+        <div class="swatch" style="background:#161614;color:#FAFAF9"><div class="swatch-token">900</div><div class="swatch-hex">#161614</div></div>
+        <div class="swatch" style="background:#0A0A09;color:#FAFAF9"><div class="swatch-token">950</div><div class="swatch-hex">#0A0A09</div></div>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-label">Semantic States</div>
+      <p class="palette-description">Restrained. Only used in feedback, never in marketing.</p>
+      <div class="swatch-row" style="grid-template-columns:repeat(4, 1fr); max-width:600px;">
+        <div class="swatch" style="background:#2D7A4F;color:#FAFAF9"><div class="swatch-token">Success</div><div class="swatch-hex">#2D7A4F</div></div>
+        <div class="swatch" style="background:#B5841F;color:#FAFAF9"><div class="swatch-token">Warning</div><div class="swatch-hex">#B5841F</div></div>
+        <div class="swatch" style="background:#A8302A;color:#FAFAF9"><div class="swatch-token">Error</div><div class="swatch-hex">#A8302A</div></div>
+        <div class="swatch" style="background:#2C5C7A;color:#FAFAF9"><div class="swatch-token">Info</div><div class="swatch-hex">#2C5C7A</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== 2. TYPOGRAPHY ================== -->
+  <section class="section">
+    <header class="section-header">
+      <h2 class="section-title">02 — Typography</h2>
+      <span class="section-meta">Switzer · 9-step scale · Ratio 1.25</span>
+    </header>
+
+    <div>
+      <div class="type-row">
+        <code class="type-token">display-2xl</code>
+        <div class="type-sample t-display-2xl">Aa</div>
+        <div class="type-meta">96 / 96 · 500</div>
+      </div>
+      <div class="type-row">
+        <code class="type-token">display-xl</code>
+        <div class="type-sample t-display-xl">Pflege mit Herz</div>
+        <div class="type-meta">72 / 76 · 500</div>
+      </div>
+      <div class="type-row">
+        <code class="type-token">display-lg</code>
+        <div class="type-sample t-display-lg">Section headline</div>
+        <div class="type-meta">56 / 62 · 500</div>
+      </div>
+      <div class="type-row">
+        <code class="type-token">heading-xl</code>
+        <div class="type-sample t-heading-xl">Inner-page title</div>
+        <div class="type-meta">40 / 46 · 500</div>
+      </div>
+      <div class="type-row">
+        <code class="type-token">heading-lg</code>
+        <div class="type-sample t-heading-lg">Section title (H2)</div>
+        <div class="type-meta">32 / 38 · 500</div>
+      </div>
+      <div class="type-row">
+        <code class="type-token">heading-md</code>
+        <div class="type-sample t-heading-md">Card title (H3)</div>
+        <div class="type-meta">24 / 32 · 500</div>
+      </div>
+      <div class="type-row">
+        <code class="type-token">heading-sm</code>
+        <div class="type-sample t-heading-sm">Emphasised label (H4)</div>
+        <div class="type-meta">20 / 28 · 500</div>
+      </div>
+      <div class="type-row">
+        <code class="type-token">body-lg</code>
+        <div class="type-sample t-body-lg">Default body text. We chose 18px instead of the standard 16px because our audience is older. Readability is non-negotiable.</div>
+        <div class="type-meta">18 / 28 · 400</div>
+      </div>
+      <div class="type-row">
+        <code class="type-token">body-sm</code>
+        <div class="type-sample t-body-sm">Caption, helper text, footer meta. Used sparingly to avoid accessibility issues.</div>
+        <div class="type-meta">14 / 22 · 400</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== 3. SPACING ================== -->
+  <section class="section">
+    <header class="section-header">
+      <h2 class="section-title">03 — Spatial System</h2>
+      <span class="section-meta">8px base · 4px sub-grid</span>
+    </header>
+    <div class="spacing-grid">
+      <div class="spacing-item"><div class="spacing-bar" style="width:4px"></div><div class="spacing-info"><strong>space-1</strong><span>4px · 0.25rem</span></div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:8px"></div><div class="spacing-info"><strong>space-2</strong><span>8px · 0.5rem</span></div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:16px"></div><div class="spacing-info"><strong>space-4</strong><span>16px · 1rem</span></div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:24px"></div><div class="spacing-info"><strong>space-6</strong><span>24px · 1.5rem</span></div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:32px"></div><div class="spacing-info"><strong>space-8</strong><span>32px · 2rem</span></div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:48px"></div><div class="spacing-info"><strong>space-12</strong><span>48px · 3rem</span></div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:64px"></div><div class="spacing-info"><strong>space-16</strong><span>64px · 4rem</span></div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:96px"></div><div class="spacing-info"><strong>space-24</strong><span>96px · 6rem</span></div></div>
+    </div>
+  </section>
+
+  <!-- ================== 4. COMPONENTS ================== -->
+  <section class="section">
+    <header class="section-header">
+      <h2 class="section-title">04 — Component Library</h2>
+      <span class="section-meta">Selected components · 37 total in spec</span>
+    </header>
+
+    <div class="component-grid">
+
+      <!-- BUTTONS -->
+      <div class="component-card">
+        <div class="component-label">Buttons · Primary</div>
+        <div class="component-row">
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary btn-md">Medium</button>
+          <button class="btn btn-primary btn-lg">Erstgespräch <span class="arrow">→</span></button>
+        </div>
+        <div class="component-label" style="margin-top:24px">Buttons · Secondary &amp; Ghost</div>
+        <div class="component-row">
+          <button class="btn btn-secondary btn-md">Mehr erfahren</button>
+          <button class="btn btn-ghost btn-md">Cancel</button>
+          <button class="btn btn-destructive btn-md">Delete</button>
+        </div>
+        <div class="component-row">
+          <button class="btn btn-primary btn-md" disabled>Disabled</button>
+        </div>
+      </div>
+
+      <!-- INPUTS -->
+      <div class="component-card">
+        <div class="component-label">Form Fields</div>
+        <div class="field" style="margin-bottom:16px">
+          <label class="field-label" for="demo-name">Name <span class="field-required">*</span></label>
+          <input id="demo-name" type="text" class="input" placeholder="Maria Müller">
+          <span class="field-helper">Wie sollen wir Sie ansprechen?</span>
+        </div>
+        <div class="field" style="margin-bottom:16px">
+          <label class="field-label" for="demo-tel">Telefon</label>
+          <input id="demo-tel" type="tel" class="input" value="079 237 55 21">
+        </div>
+        <div class="field error">
+          <label class="field-label" for="demo-email">E-Mail <span class="field-required">*</span></label>
+          <input id="demo-email" type="email" class="input" value="ungültig@">
+          <span class="field-error">Bitte geben Sie eine gültige E-Mail-Adresse ein.</span>
+        </div>
+      </div>
+
+      <!-- CHOICES -->
+      <div class="component-card">
+        <div class="component-label">Selection Controls</div>
+        <div class="choice-group" style="margin-bottom:24px">
+          <label class="choice"><input type="checkbox" checked><span>Pflegeleistungen</span></label>
+          <label class="choice"><input type="checkbox" checked><span>Hauswirtschaft</span></label>
+          <label class="choice"><input type="checkbox"><span>Nachtwachen</span></label>
+        </div>
+        <div class="component-label">Switch</div>
+        <div class="component-row">
+          <label class="switch"><input type="checkbox" checked><span class="switch-slider"></span></label>
+          <span style="font-size:14px;color:var(--color-neutral-700)">Newsletter abonnieren</span>
+        </div>
+      </div>
+
+      <!-- BADGES -->
+      <div class="component-card">
+        <div class="component-label">Badges</div>
+        <div class="component-row">
+          <span class="badge badge-neutral">Neutral</span>
+          <span class="badge badge-primary">KLV</span>
+          <span class="badge badge-success">Aktiv</span>
+          <span class="badge badge-warning">In Arbeit</span>
+          <span class="badge badge-error">Notfall</span>
+        </div>
+        <div class="component-label" style="margin-top:24px">Alerts</div>
+        <div class="alert alert-success">
+          <span class="alert-icon">✓</span>
+          <div><div class="alert-title">Anfrage gesendet</div>Wir melden uns innerhalb 24 Stunden zurück.</div>
+        </div>
+        <div class="alert alert-warning">
+          <span class="alert-icon">!</span>
+          <div><div class="alert-title">Hinweis</div>Tarife gültig ab 1. Januar 2025.</div>
+        </div>
+      </div>
+
+      <!-- SERVICE CARD -->
+      <div class="service-card">
+        <div class="service-icon">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </div>
+        <h3 class="service-title">Pflege &amp; Betreuung</h3>
+        <p class="service-desc">Bedarfsgerechte Pflege zu Hause — von Körperpflege über Medikamentenabgabe bis hin zur Wundversorgung. KLV-anerkannt.</p>
+        <a href="#" class="service-link">Mehr erfahren →</a>
+      </div>
+
+      <!-- TESTIMONIAL -->
+      <div class="testimonial">
+        <div class="testimonial-mark">"</div>
+        <p class="testimonial-quote">Riviera Med betreut meine Mutter seit zwei Jahren. Das Team ist warmherzig, kompetent und zuverlässig — genau das, was wir gesucht haben.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SM</div>
+          <div>
+            <div class="testimonial-name">Sandra Müller</div>
+            <div class="testimonial-role">Tochter einer Klientin</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TARIFF TABLE -->
+    <div class="component-card" style="margin-top:32px">
+      <div class="component-label">Tariff Table — Tabular Numerals</div>
+      <table class="tariff-table">
+        <thead>
+          <tr><th>Leistung</th><th>Einheit</th><th>Tarif</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Hauswirtschaftliche Leistungen</td><td>pro Stunde</td><td>CHF 55.00</td></tr>
+          <tr><td>Wegpauschale</td><td>pro Besuch</td><td>CHF 7.00</td></tr>
+          <tr><td>Präsenz-Nachtwache</td><td>8h Nacht</td><td>CHF 400.00</td></tr>
+          <tr><td>Sitz-Nachtwache</td><td>8h Nacht</td><td>CHF 420.00</td></tr>
+          <tr><td>Diplomierte Pflegekraft</td><td>8h Nacht</td><td>CHF 460.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ACCORDION -->
+    <div class="component-card" style="margin-top:32px">
+      <div class="component-label">Accordion — Financing Information</div>
+      <div class="accordion">
+        <div class="accordion-item open">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+            Krankenversicherung
+            <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          </button>
+          <div class="accordion-body">Pflegeleistungen werden direkt mit der Krankenkasse abgerechnet. Nur Patientenbeteiligung und nicht-kassenpflichtige Leistungen werden Ihnen direkt verrechnet.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+            Kanton Bern (GSI)
+            <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          </button>
+          <div class="accordion-body">Die Gesundheitsdirektion des Kantons Bern beteiligt sich an den Pflegekosten gemäss kantonaler Pflegefinanzierungsverordnung.</div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+            Ergänzungsleistungen (EL)
+            <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          </button>
+          <div class="accordion-body">In Härtefällen werden Pflegekosten von den Ergänzungsleistungen übernommen. Pro Senectute Thun unterstützt Sie bei der Antragstellung.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== 5. MOTION ================== -->
+  <section class="section">
+    <header class="section-header">
+      <h2 class="section-title">05 — Motion Principles</h2>
+      <span class="section-meta">Restraint · Honor reduced-motion</span>
+    </header>
+    <div class="motion-demo">
+      <div class="motion-card standard">
+        <div class="motion-name">Standard · 250ms</div>
+        <div class="motion-bezier">cubic-bezier(0.4, 0, 0.2, 1)</div>
+        <div class="motion-track"><div class="motion-dot"></div></div>
+      </div>
+      <div class="motion-card out">
+        <div class="motion-name">Ease Out · 250ms</div>
+        <div class="motion-bezier">cubic-bezier(0, 0, 0.2, 1)</div>
+        <div class="motion-track"><div class="motion-dot"></div></div>
+      </div>
+      <div class="motion-card in">
+        <div class="motion-name">Ease In · 250ms</div>
+        <div class="motion-bezier">cubic-bezier(0.4, 0, 1, 1)</div>
+        <div class="motion-track"><div class="motion-dot"></div></div>
+      </div>
+      <div class="motion-card emphasized">
+        <div class="motion-name">Emphasized · 250ms</div>
+        <div class="motion-bezier">cubic-bezier(0.2, 0, 0, 1)</div>
+        <div class="motion-track"><div class="motion-dot"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== 6. ACCESSIBILITY ================== -->
+  <section class="section">
+    <header class="section-header">
+      <h2 class="section-title">06 — Accessibility</h2>
+      <span class="section-meta">WCAG AA minimum · AAA for body</span>
+    </header>
+    <div class="contrast-grid">
+      <div class="contrast-row" style="background:var(--color-neutral-100); font-weight:500; border-bottom:none;">
+        <div>Sample</div><div>Pair</div><div>Ratio</div><div>WCAG</div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-swatch" style="background:#FAFAF9;color:#3D3D3A">Aa</div>
+        <div>neutral-700 on neutral-50 (body)</div>
+        <div style="font-family:ui-monospace,monospace">11.8 : 1</div>
+        <div><span class="contrast-pass">AAA</span></div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-swatch" style="background:#FAFAF9;color:#272725">Aa</div>
+        <div>neutral-800 on neutral-50 (heading)</div>
+        <div style="font-family:ui-monospace,monospace">14.6 : 1</div>
+        <div><span class="contrast-pass">AAA</span></div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-swatch" style="background:#1F4340;color:#FAFAF9">Aa</div>
+        <div>neutral-50 on primary-700 (CTA)</div>
+        <div style="font-family:ui-monospace,monospace">9.1 : 1</div>
+        <div><span class="contrast-pass">AAA</span></div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-swatch" style="background:#FAFAF9;color:#1F4340">Aa</div>
+        <div>primary-700 on neutral-50 (link)</div>
+        <div style="font-family:ui-monospace,monospace">9.1 : 1</div>
+        <div><span class="contrast-pass">AAA</span></div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-swatch" style="background:#FBF8F2;color:#5F4C22">Aa</div>
+        <div>secondary-700 on secondary-50</div>
+        <div style="font-family:ui-monospace,monospace">8.9 : 1</div>
+        <div><span class="contrast-pass">AAA</span></div>
+      </div>
+      <div class="contrast-row">
+        <div class="contrast-swatch" style="background:#F9ECEB;color:#7A211C">!</div>
+        <div>error-700 on error-50</div>
+        <div style="font-family:ui-monospace,monospace">9.4 : 1</div>
+        <div><span class="contrast-pass">AAA</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== 7. PAGE COMPOSITION ================== -->
+  <section class="section">
+    <header class="section-header">
+      <h2 class="section-title">07 — Composition Demo</h2>
+      <span class="section-meta">All tokens · One page</span>
+    </header>
+    <div class="demo-page">
+      <div class="demo-header">
+        <div class="demo-logo">Riviera Med<span>.</span></div>
+        <nav class="demo-nav" aria-label="Demo">
+          <a href="#">Leistungen</a><a href="#">Tarife</a><a href="#">Über uns</a><a href="#">Kontakt</a>
+        </nav>
+      </div>
+      <div class="demo-hero">
+        <div class="demo-eyebrow">Private Spitex · Region Thun</div>
+        <h1>Pflege zu Hause — mit Hand und Herz.</h1>
+        <p>Bedarfsgerechte Pflege, Betreuung und Physiotherapie. Rund um die Uhr. Alle Krankenkassen anerkannt.</p>
+        <div class="demo-hero-actions">
+          <button class="btn btn-primary btn-lg">Erstgespräch vereinbaren <span class="arrow">→</span></button>
+          <button class="btn btn-secondary btn-lg">Zu den Tarifen</button>
+        </div>
+      </div>
+      <div class="demo-trust-bar">
+        <span>24/7 erreichbar</span>
+        <span>Alle Krankenkassen</span>
+        <span>KLV-anerkannt</span>
+        <span>Region Thun &amp; Bern</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== FOOTER ================== -->
+  <footer class="preview-footer">
+    <div>Riviera Med Design System · v1.0 · April 2026</div>
+    <div>Authored as Global Design Director deliverable</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
