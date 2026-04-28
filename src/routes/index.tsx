@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, Heart, Home, Moon, Activity, Sparkles, Phone, ArrowRight } from "lucide-react";
 import heroImage from "@/assets/headline-foto.jpg";
 import livingRoom from "@/assets/vertrauen.jpg";
-import landscape from "@/assets/thun-landscape.jpg";
+import landscape from "@/assets/thunersee.jpg";
 import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/")({
