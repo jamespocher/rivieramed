@@ -8,8 +8,8 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-border bg-[oklch(0.22_0.04_265)] text-[oklch(0.88_0.01_260)]">
       <div className="rm-container py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="mb-5 inline-block rounded-md bg-white px-4 py-3">
-            <Logo height={38} />
+          <div className="mb-5">
+            <Logo height={42} variant="weiss" />
           </div>
           <p className="text-[15px] leading-relaxed text-[oklch(0.78_0.005_100)]">
             Spitex in den Regionen Thun & Bern. Pflege und Betreuung zu Hause – kompetent, herzlich, rund um die Uhr.
