@@ -1,4 +1,4 @@
-import { Outlet, Link, createRootRoute, useLocation } from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Toaster } from "@/components/ui/sonner";
@@ -31,12 +31,11 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
-  const { pathname } = useLocation();
-  const isHome = pathname === "/";
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
-      <main className={`flex-1 ${isHome ? "" : "pt-[76px]"}`}>
+      {/* Die Kopfzeile ist fix und immer deckend – 88px Höhe freihalten */}
+      <main className="flex-1 pt-[88px]">
         <Outlet />
       </main>
       <SiteFooter />

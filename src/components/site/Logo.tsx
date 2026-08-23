@@ -1,11 +1,12 @@
-import logoSrc from "@/assets/riviera-med-logo.png";
+import logoSrc from "@/assets/riviera-med-logo-trimmed.png";
 
 /**
- * Riviera Med brand logo — official uploaded asset.
- * The image already contains the wordmark "SPITEX RIVIERA MED".
+ * Riviera Med Wortmarke – freigestellt (ohne transparenten Rand),
+ * damit die angegebene Höhe der tatsächlichen Logohöhe entspricht.
+ * Seitenverhältnis 2.65 : 1
  */
 export function Logo({
-  height = 40,
+  height = 44,
   className = "",
   alt = "Spitex Riviera Med",
 }: {

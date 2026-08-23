@@ -13,6 +13,7 @@ import { Route as UeberUnsRouteImport } from './routes/ueber-uns'
 import { Route as TarifeRouteImport } from './routes/tarife'
 import { Route as LeistungenRouteImport } from './routes/leistungen'
 import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as JobsRouteImport } from './routes/jobs'
 import { Route as ImpressumRouteImport } from './routes/impressum'
 import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as IndexRouteImport } from './routes/index'
@@ -37,6 +38,11 @@ const KontaktRoute = KontaktRouteImport.update({
   path: '/kontakt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JobsRoute = JobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImpressumRoute = ImpressumRouteImport.update({
   id: '/impressum',
   path: '/impressum',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/jobs': typeof JobsRoute
   '/kontakt': typeof KontaktRoute
   '/leistungen': typeof LeistungenRoute
   '/tarife': typeof TarifeRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/jobs': typeof JobsRoute
   '/kontakt': typeof KontaktRoute
   '/leistungen': typeof LeistungenRoute
   '/tarife': typeof TarifeRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/jobs': typeof JobsRoute
   '/kontakt': typeof KontaktRoute
   '/leistungen': typeof LeistungenRoute
   '/tarife': typeof TarifeRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/datenschutz'
     | '/impressum'
+    | '/jobs'
     | '/kontakt'
     | '/leistungen'
     | '/tarife'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/datenschutz'
     | '/impressum'
+    | '/jobs'
     | '/kontakt'
     | '/leistungen'
     | '/tarife'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/datenschutz'
     | '/impressum'
+    | '/jobs'
     | '/kontakt'
     | '/leistungen'
     | '/tarife'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DatenschutzRoute: typeof DatenschutzRoute
   ImpressumRoute: typeof ImpressumRoute
+  JobsRoute: typeof JobsRoute
   KontaktRoute: typeof KontaktRoute
   LeistungenRoute: typeof LeistungenRoute
   TarifeRoute: typeof TarifeRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KontaktRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/jobs': {
+      id: '/jobs'
+      path: '/jobs'
+      fullPath: '/jobs'
+      preLoaderRoute: typeof JobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/impressum': {
       id: '/impressum'
       path: '/impressum'
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DatenschutzRoute: DatenschutzRoute,
   ImpressumRoute: ImpressumRoute,
+  JobsRoute: JobsRoute,
   KontaktRoute: KontaktRoute,
   LeistungenRoute: LeistungenRoute,
   TarifeRoute: TarifeRoute,
