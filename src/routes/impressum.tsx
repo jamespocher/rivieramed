@@ -36,6 +36,16 @@ function ImpressumPage() {
           <p>HIN (verschlüsselt): <a href={`mailto:${hinEmail}`} className="text-primary hover:underline">{hinEmail}</a></p>
           {cms.extraInfo && <p className="mt-4 text-foreground/75 whitespace-pre-line">{cms.extraInfo}</p>}
         </div>
+
+        <div className="mt-12 pt-8 border-t border-border text-foreground/75">
+          <p className="rm-eyebrow mb-2">Website</p>
+          <p>
+            Website gemacht von{" "}
+            <a href="https://www.stube90.ch" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">
+              STUBE90, Studio Bern 90
+            </a>
+          </p>
+        </div>
       </div>
     </section>
   );
