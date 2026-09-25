@@ -6,6 +6,7 @@ import { useScrolled } from "@/hooks/use-reveal";
 import { CONTACT } from "@/lib/contact";
 
 const nav = [
+  { to: "/", label: "Startseite" },
   { to: "/leistungen", label: "Leistungen" },
   { to: "/tarife", label: "Tarife" },
   { to: "/ueber-uns", label: "Über uns" },
@@ -44,7 +45,8 @@ export function SiteHeader() {
             <Link
               key={item.to}
               to={item.to}
-              className="relative px-4 py-2 rounded-md text-[16px] font-medium transition-colors rm-link text-foreground/80 hover:text-primary"
+              className="relative px-3 xl:px-4 py-2 rounded-md text-[16px] font-medium whitespace-nowrap transition-colors rm-link text-foreground/80 hover:text-primary"
+              activeOptions={{ exact: true }}
               activeProps={{ className: "text-primary" }}
             >
               {item.label}
@@ -55,14 +57,14 @@ export function SiteHeader() {
         <div className="flex items-center gap-3">
           <a
             href={`tel:${CONTACT.phoneTel}`}
-            className="hidden md:inline-flex items-center gap-2 h-11 px-4 rounded-md text-[15px] font-medium transition-all text-primary hover:bg-surface-alt"
+            className="hidden md:inline-flex lg:hidden xl:inline-flex items-center gap-2 h-11 px-4 rounded-md text-[15px] font-medium whitespace-nowrap transition-all text-primary hover:bg-surface-alt"
           >
             <Phone className="h-4 w-4" aria-hidden />
             <span className="tabular-nums">{CONTACT.phone}</span>
           </a>
           <Link
             to="/kontakt"
-            className="hidden md:inline-flex h-11 items-center px-5 rounded-md font-medium transition-all hover:-translate-y-0.5 hover:shadow-card bg-primary text-primary-foreground hover:bg-primary-hover"
+            className="hidden md:inline-flex h-11 items-center px-5 rounded-md font-medium whitespace-nowrap transition-all hover:-translate-y-0.5 hover:shadow-card bg-primary text-primary-foreground hover:bg-primary-hover"
           >
             Anmelden
           </Link>
@@ -86,6 +88,7 @@ export function SiteHeader() {
                 to={item.to}
                 onClick={() => setOpen(false)}
                 className="px-4 py-3 rounded-md text-[17px] font-medium hover:bg-surface-alt transition-colors"
+                activeOptions={{ exact: true }}
                 activeProps={{ className: "text-primary bg-surface-alt" }}
               >
                 {item.label}
