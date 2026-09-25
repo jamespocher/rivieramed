@@ -1,5 +1,5 @@
-import logoFarbe from "@/assets/riviera-med-logo-trimmed.png";
-import logoWeiss from "@/assets/riviera-med-logo-weiss.png";
+import logoFarbe from "@/assets/riviera-med-logo-trimmed.webp";
+import logoWeiss from "@/assets/riviera-med-logo-weiss.webp";
 
 /**
  * Riviera Med Wortmarke – freigestellt (ohne transparenten Rand),

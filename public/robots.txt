@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://riviera-med.com/sitemap.xml

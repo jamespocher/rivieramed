@@ -1,37 +1,79 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, Heart, Home, Moon, Activity, Sparkles, Phone, ArrowRight, type LucideIcon } from "lucide-react";
-import heroImage from "@/assets/headline-foto.jpg";
-import livingRoom from "@/assets/vertrauen.jpg";
-import landscape from "@/assets/thunersee.jpg";
+import livingRoom from "@/assets/vertrauen.webp";
+import landscape from "@/assets/thunersee.webp";
 import { Reveal } from "@/components/site/Reveal";
+import { ReviewSlider } from "@/components/site/ReviewSlider";
 import { AnmeldeFormular } from "@/components/site/AnmeldeFormular";
 import { CONTACT } from "@/lib/contact";
 import { scrollToId } from "@/lib/scroll-to";
-import { sanityClient, homepageQuery, type HomepageData } from "@/lib/sanity";
+import { REVIEWS, averageRating, type Review } from "@/lib/reviews";
+import { homepageQuery, type HomepageData } from "@/lib/cms-queries";
+import { useCms } from "@/hooks/use-cms";
+
+// Hero-Bild liegt fix unter /public, damit index.html es vorladen kann (LCP).
+const HERO_IMG = "/images/spitex-thun-pflege-zuhause-hero.webp";
+const HERO_IMG_MOBILE = "/images/spitex-thun-pflege-zuhause-hero-mobile.webp";
+
+const DEFAULT_FAQS = [
+  {
+    q: "Übernimmt die Krankenkasse die Kosten der Spitex?",
+    a: "Ja. Pflegeleistungen nach KLV (Krankenpflege-Leistungsverordnung) – also Abklärung, Grundpflege und Behandlungspflege zu Hause – werden von allen Schweizer Krankenkassen übernommen, unabhängig von Ihrer Kasse. Es bleibt lediglich die gesetzliche Patientenbeteiligung von maximal CHF 15.35 pro Tag. Hauswirtschaft und Betreuung sind Selbstzahlerleistungen zu transparenten Tarifen.",
+  },
+  {
+    q: "Was ist der Unterschied zwischen privater und öffentlicher Spitex?",
+    a: "Als anerkannte private Spitex erbringen wir dieselben Pflegeleistungen nach KLV wie die öffentliche Spitex – und rechnen sie genauso über die Krankenkasse ab. Der Unterschied liegt in der Betreuung: ein kleines, festes Team, mehr Flexibilität bei Zeiten und Umfang, und Sie wählen Ihre Spitex frei.",
+  },
+  {
+    q: "Wie schnell kann die Pflege zu Hause starten?",
+    a: "In dringenden Fällen – zum Beispiel nach einem Spitalaustritt – innerhalb von 24 bis 48 Stunden. Für geplante Einsätze vereinbaren wir ein unverbindliches Erstgespräch, meist innerhalb einer Woche.",
+  },
+  {
+    q: "Was kostet das Erstgespräch?",
+    a: "Das Erstgespräch bei Ihnen zu Hause ist kostenlos und unverbindlich. Wir klären den Pflege- und Betreuungsbedarf ab, beantworten Ihre Fragen zur Finanzierung und planen gemeinsam die passende Unterstützung.",
+  },
+  {
+    q: "In welchen Regionen ist Riviera Med als Spitex tätig?",
+    a: "Wir sind in Thun, Bern, Spiez, Steffisburg, Hilterfingen, Oberhofen und im ganzen Berner Oberland für Sie da. Unser Sitz ist in Thun – kurze Wege sind uns wichtig.",
+  },
+  {
+    q: "Bietet Riviera Med auch Nachtwachen und Wochenenddienste an?",
+    a: "Ja. Wir sind 24 Stunden am Tag, 365 Tage im Jahr erreichbar. Nachtwachen, Sitzwachen, Wochenend- und Feiertagsdienste bis hin zur 24-Stunden-Betreuung sind ein fester Teil unseres Angebots.",
+  },
+  {
+    q: "Wer kommt zu uns nach Hause?",
+    a: "Sie werden von einem kleinen, festen Team aus diplomierten Pflegefachpersonen und Betreuenden begleitet, das Sie persönlich kennenlernen. Das schafft Vertrauen und Kontinuität – gerade bei Pflege und Betreuung zu Hause.",
+  },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Riviera Med — Spitex in der Region Thun & Bern" },
+      { title: "Spitex Thun & Bern – Professionelle Pflege zu Hause | Riviera Med" },
       {
         name: "description",
         content:
-          "Pflege und Betreuung zu Hause in Thun und Umgebung. Kompetent, herzlich, rund um die Uhr. Alle Krankenkassen anerkannt. Erstgespräch kostenlos.",
+          "Riviera Med ist Ihre private Spitex in Thun und Bern: professionelle Pflege, Betreuung, Hauswirtschaft, Nachtwachen und Physiotherapie zu Hause. Alle Krankenkassen anerkannt, 24/7 erreichbar. Kostenloses Erstgespräch.",
       },
-      { property: "og:title", content: "Riviera Med — Spitex in der Region Thun & Bern" },
+      { property: "og:title", content: "Spitex Thun & Bern – Professionelle Pflege mit Hand und Herz | Riviera Med" },
       {
         property: "og:description",
-        content: "Pflege und Betreuung zu Hause. Herzlich, kompetent, 24/7 in der Region Thun & Bern.",
+        content: "Private Spitex für Pflege und Betreuung zu Hause in Thun, Bern und im Berner Oberland. Alle Krankenkassen anerkannt, rund um die Uhr erreichbar.",
+      },
+      { property: "og:image", content: "https://riviera-med.com/images/spitex-thun-pflege-zuhause-hero.webp" },
+      {
+        "script:ld+json": {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: DEFAULT_FAQS.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        },
       },
     ],
   }),
-  loader: async (): Promise<HomepageData | null> => {
-    try {
-      return await sanityClient.fetch<HomepageData>(homepageQuery)
-    } catch {
-      return null
-    }
-  },
   component: HomePage,
 });
 
@@ -40,54 +82,39 @@ const ICON_MAP: Record<string, LucideIcon> = { Heart, Home, Moon, Activity, Spar
 
 // ── Fallback-Daten (aktiv solange kein Sanity-Dokument existiert) ────
 const DEFAULT_SERVICES = [
-  { icon: Heart, title: "Pflege & Betreuung", description: "Medizinische Grund- und Behandlungspflege nach KLV. Wundversorgung, Medikamente, Mobilisation – alles über Ihre Krankenkasse abgerechnet." },
-  { icon: Home, title: "Hauswirtschaft", description: "Einkaufen, Kochen, Reinigen, Wäsche. Damit Sie sich zu Hause weiterhin wohlfühlen – unabhängig und in Ihrem eigenen Rhythmus." },
-  { icon: Moon, title: "Nachtwachen", description: "Präsenz- und Sitzwachen sowie diplomierte Nachtpflege. Sie und Ihre Angehörigen können beruhigt schlafen." },
-  { icon: Activity, title: "Physiotherapie", description: "Gezielte Therapie bei Ihnen zu Hause. Nach Unfall, Operation oder bei chronischen Beschwerden – auf Verordnung Ihres Arztes." },
-  { icon: Sparkles, title: "Entlastung für Angehörige", description: "Kurzeinsätze, Ferienvertretung, Begleitung zu Arztterminen. Damit pflegende Angehörige auch einmal durchatmen können." },
-  { icon: Heart, title: "Beratung & Abklärung", description: "Unverbindliches Erstgespräch bei Ihnen zu Hause. Wir erstellen gemeinsam mit Ihnen einen Plan – individuell und ehrlich." },
+  { icon: Heart, title: "Pflege zu Hause", description: "Grund- und Behandlungspflege nach KLV bei Ihnen zu Hause: Wundversorgung, Medikamente richten, Mobilisation, Körperpflege. Über Ihre Krankenkasse abgerechnet." },
+  { icon: Home, title: "Hauswirtschaft & Betreuung", description: "Einkaufen, Kochen, Reinigen, Wäsche und Begleitung im Alltag. Damit Sie in Thun, Bern oder im Berner Oberland selbstbestimmt in den eigenen vier Wänden bleiben." },
+  { icon: Moon, title: "Nachtwachen & 24-Stunden-Betreuung", description: "Präsenz- und Sitzwachen, diplomierte Nachtpflege und Betreuung rund um die Uhr. Für ruhige Nächte – für Sie und Ihre Angehörigen." },
+  { icon: Activity, title: "Physiotherapie zu Hause", description: "Therapie in Ihrem Zuhause nach Unfall, Operation oder bei chronischen Beschwerden – auf ärztliche Verordnung und von der Krankenkasse übernommen." },
+  { icon: Sparkles, title: "Entlastung für pflegende Angehörige", description: "Stundenweise Einsätze, Ferienvertretung und Begleitung zu Arztterminen. Damit pflegende Angehörige durchatmen können." },
+  { icon: Heart, title: "Beratung & Abklärung", description: "Kostenloses, unverbindliches Erstgespräch bei Ihnen zu Hause. Wir klären den Pflegebedarf ab und erstellen gemeinsam mit Ihnen einen individuellen Pflegeplan." },
 ];
 
-// Vertrauenspunkte – identisch im Hero und in der Leiste darunter
-const TRUST_POINTS = ["Thun & Bern", "Alle Krankenkassen anerkannt"];
+// Vertrauenspunkte im Hero
+const TRUST_POINTS = ["Spitex in Thun, Bern & Berner Oberland", "Alle Krankenkassen anerkannt", "24 Stunden erreichbar", "Kostenloses Erstgespräch"];
 
 const DEFAULT_WHY_BULLETS = [
   { title: "Kleines festes Team", description: "Sie lernen uns persönlich kennen – ohne wechselndes Personal." },
-  { title: "Transparente Preise", description: "Keine versteckten Kosten, Abrechnung im 15-Minuten-Takt." },
-  { title: "Flexibel im Alltag", description: "Einsätze passen sich Ihrem Rhythmus an – nicht umgekehrt." },
-];
-
-const DEFAULT_TESTIMONIALS = [
-  { quote: "Mein Vater wollte um keinen Preis ins Heim. Riviera Med hat es möglich gemacht, dass er in seiner gewohnten Umgebung bleiben kann. Die Pflegerinnen sind einfühlsam und zuverlässig.", author: "Sandra M.", role: "Tochter", location: "Hilterfingen" },
-  { quote: "Nach meiner Hüftoperation brauchte ich jeden Tag Unterstützung. Das Team war stets pünktlich, freundlich und sehr professionell. Ich fühlte mich in besten Händen.", author: "Heinz R.", role: "Klient, 78", location: "Thun" },
-  { quote: "Die transparente Preisgestaltung und die ehrliche Beratung haben uns sofort überzeugt. Keine versteckten Kosten, klare Kommunikation – so muss es sein.", author: "Margrit H.", role: "Ehefrau", location: "Spiez" },
-];
-
-const DEFAULT_FAQS = [
-  { q: "Übernimmt die Krankenkasse die Kosten?", a: "Ja. Pflegeleistungen nach KLV (Krankenpflege-Leistungsverordnung) werden von allen Schweizer Krankenkassen übernommen – unabhängig von Ihrer Kasse. Es bleibt lediglich die gesetzliche Patientenbeteiligung von maximal CHF 15.35 pro Tag." },
-  { q: "Wie schnell können Sie starten?", a: "In dringenden Fällen innerhalb von 24 bis 48 Stunden. Für geplante Einsätze vereinbaren wir gerne ein unverbindliches Erstgespräch, meist innerhalb einer Woche." },
-  { q: "Was kostet ein Erstgespräch?", a: "Das Erstgespräch bei Ihnen zu Hause ist kostenlos und unverbindlich. Wir nehmen uns Zeit, Ihre Situation kennenzulernen und gemeinsam die passende Unterstützung zu planen." },
-  { q: "Welche Regionen bedienen Sie?", a: "Wir sind in ganz Thun, Bern und im Berner Oberland verfügbar." },
-  { q: "Sind Sie auch nachts und am Wochenende da?", a: "Ja. Wir sind 24 Stunden am Tag, 365 Tage im Jahr erreichbar. Nachtwachen, Wochenend- und Feiertagsdienste sind ein fester Teil unseres Angebots." },
-  { q: "Wer kommt zu uns nach Hause?", a: "Sie werden von einem kleinen, festen Team betreut, das Sie persönlich kennenlernen. Das schafft Vertrauen und Kontinuität – besonders wichtig bei Pflege und Betreuung." },
+  { title: "Transparente Tarife", description: "Keine versteckten Kosten, Abrechnung im 15-Minuten-Takt, Pflegeleistungen über die Krankenkasse." },
+  { title: "Flexibel im Alltag", description: "Einsätze richten sich nach Ihrem Rhythmus – auch abends, nachts und am Wochenende." },
 ];
 
 function HomePage() {
-  const cms = Route.useLoaderData() ?? {};
+  const cms = useCms<HomepageData>(homepageQuery) ?? {};
 
   // Sektion-Daten: CMS-Wert wenn vorhanden, sonst Fallback
-  const heroEyebrow = cms.heroEyebrow ?? "Spitex · Region Thun & Bern";
-  const heroHeading = cms.heroHeading ?? "Pflege zu Hause.";
-  const heroHeadingAccent = cms.heroHeadingAccent ?? "Mit Herz.";
-  const heroSubtext = cms.heroSubtext ?? "Bedarfsgerechte Pflege und Betreuung – kompetent, herzlich und rund um die Uhr in den Regionen Thun, Bern und im Berner Oberland.";
+  const heroEyebrow = cms.heroEyebrow ?? "Spitex Thun & Bern";
+  const heroHeading = cms.heroHeading ?? "Professionelle Pflege";
+  const heroHeadingAccent = cms.heroHeadingAccent ?? "mit Hand und Herz.";
+  const heroSubtext = cms.heroSubtext ?? "Riviera Med ist Ihre private Spitex für Pflege und Betreuung zu Hause – in Thun, Bern, Spiez, Steffisburg und im ganzen Berner Oberland. Von allen Krankenkassen anerkannt, rund um die Uhr erreichbar.";
   const heroCtaText = cms.heroCtaText ?? "Erstgespräch vereinbaren";
   const heroTrustBadges = cms.heroTrustBadges ?? TRUST_POINTS;
   const heroTrustCardQuote = cms.heroTrustCardQuote ?? "Ein kleines Team, das Zeit hat und wirklich zuhört.";
   const heroTrustCardAttribution = cms.heroTrustCardAttribution ?? "Margrit H. · Spiez";
 
-  const servicesEyebrow = cms.servicesEyebrow ?? "Unsere Leistungen";
-  const servicesHeading = cms.servicesHeading ?? "Ein Angebot, das sich Ihrem Leben anpasst.";
-  const servicesSubtext = cms.servicesSubtext ?? "Von wenigen Stunden die Woche bis zur 24-Stunden-Betreuung – wir gestalten Ihre Unterstützung gemeinsam mit Ihnen.";
+  const servicesEyebrow = cms.servicesEyebrow ?? "Unsere Spitex-Leistungen";
+  const servicesHeading = cms.servicesHeading ?? "Pflege und Betreuung, die sich Ihrem Leben anpasst.";
+  const servicesSubtext = cms.servicesSubtext ?? "Von wenigen Stunden pro Woche bis zur 24-Stunden-Betreuung: Pflege, Hauswirtschaft, Nachtwache und Physiotherapie aus einer Hand – zu Hause in Thun, Bern und im Berner Oberland.";
   const services = cms.services?.length
     ? cms.services.map((s) => ({ icon: ICON_MAP[s.icon] ?? Heart, title: s.title, description: s.description }))
     : DEFAULT_SERVICES;
@@ -95,24 +122,27 @@ function HomePage() {
   const whyEyebrow = cms.whyEyebrow ?? "Warum Riviera Med";
   const whyHeading = cms.whyHeading ?? "Zeit. Vertrauen.";
   const whyHeadingAccent = cms.whyHeadingAccent ?? "Kontinuität.";
-  const whySubtext = cms.whySubtext ?? "Wir sind ein kleines, festes Team. Das bedeutet: Sie sehen immer bekannte Gesichter, und wir nehmen uns die Zeit, die es braucht.";
+  const whySubtext = cms.whySubtext ?? "Wir sind eine kleine, private Spitex mit festem Team. Das bedeutet: Sie sehen immer bekannte Gesichter, und wir nehmen uns die Zeit, die gute Pflege zu Hause braucht.";
   const whyBullets = cms.whyBullets?.length ? cms.whyBullets : DEFAULT_WHY_BULLETS;
 
-  const landscapeEyebrow = cms.landscapeEyebrow ?? "Zu Hause in der Region Thun und Bern";
+  const landscapeEyebrow = cms.landscapeEyebrow ?? "Spitex in Thun, Bern und im Berner Oberland";
   const landscapeHeading = cms.landscapeHeading ?? "Dort, wo Sie zu Hause sind – sind wir auch.";
 
-  const testimonialsEyebrow = cms.testimonialsEyebrow ?? "Stimmen aus der Region";
-  const testimonialsHeading = cms.testimonialsHeading ?? "Was Familien über uns sagen.";
-  const testimonials = cms.testimonials?.length ? cms.testimonials : DEFAULT_TESTIMONIALS;
+  const reviewsEyebrow = cms.testimonialsEyebrow ?? "Rezensionen";
+  const reviewsHeading = cms.testimonialsHeading ?? "Was Klientinnen, Klienten und Angehörige über uns sagen.";
+  const reviews: Review[] = cms.testimonials?.length
+    ? cms.testimonials.map((t) => ({ quote: t.quote, author: t.author, role: t.role, location: t.location, rating: 5 as const }))
+    : REVIEWS;
+  const rating = averageRating(reviews);
 
-  const faqEyebrow = cms.faqEyebrow ?? "Häufige Fragen";
-  const faqHeading = cms.faqHeading ?? "Was Sie wissen möchten.";
+  const faqEyebrow = cms.faqEyebrow ?? "Häufige Fragen zur Spitex";
+  const faqHeading = cms.faqHeading ?? "Was Sie über Pflege zu Hause wissen möchten.";
   const faqs = cms.faqs?.length
     ? cms.faqs.map((f) => ({ q: f.question, a: f.answer }))
     : DEFAULT_FAQS;
 
-  const ctaHeading = cms.ctaHeading ?? "Sind wir die Richtigen für Ihre Familie?";
-  const ctaSubtext = cms.ctaSubtext ?? "Lassen Sie uns unverbindlich darüber sprechen. Ein Erstgespräch bei Ihnen zu Hause ist kostenlos.";
+  const ctaHeading = cms.ctaHeading ?? "Sind wir die richtige Spitex für Ihre Familie?";
+  const ctaSubtext = cms.ctaSubtext ?? "Lassen Sie uns unverbindlich darüber sprechen. Ein Erstgespräch bei Ihnen zu Hause in Thun, Bern oder im Berner Oberland ist kostenlos.";
   const ctaButtonText = cms.ctaButtonText ?? "Erstgespräch vereinbaren";
 
   return (
@@ -120,7 +150,18 @@ function HomePage() {
       {/* ==================== HERO ==================== */}
       <section className="relative min-h-[calc(92vh-88px)] flex items-center overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <img src={heroImage} alt="" aria-hidden className="h-full w-full object-cover" />
+          <picture>
+            <source media="(max-width: 767px)" srcSet={HERO_IMG_MOBILE} type="image/webp" />
+            <img
+              src={HERO_IMG}
+              alt="Pflegefachperson hält die Hand einer Klientin zu Hause – Spitex Riviera Med, Thun und Bern"
+              className="h-full w-full object-cover"
+              width={1920}
+              height={1280}
+              fetchPriority="high"
+              decoding="async"
+            />
+          </picture>
           <div
             className="absolute inset-0"
             style={{ background: "linear-gradient(110deg, oklch(0.24 0.04 175 / 0.82) 0%, oklch(0.28 0.04 175 / 0.65) 45%, oklch(0.30 0.04 175 / 0.35) 100%)" }}
@@ -131,27 +172,26 @@ function HomePage() {
 
         <div className="rm-container pt-20 pb-24 md:pt-28 md:pb-32 w-full">
           <div className="max-w-3xl text-white">
-            <Reveal>
-              <p className="inline-flex items-center gap-2 text-[13px] font-semibold tracking-[0.16em] uppercase text-accent mb-6">
-                <span className="h-px w-8 bg-accent" />
+            <div className="rm-fade-in">
+              <p className="text-[13px] font-semibold tracking-[0.16em] uppercase text-accent mb-6">
                 {heroEyebrow}
               </p>
-            </Reveal>
+            </div>
 
-            <Reveal delay={100}>
-              <h1 className="text-[44px] md:text-[64px] lg:text-[76px] font-semibold tracking-tight leading-[1.02] text-white">
+            <div className="rm-fade-in" style={{ animationDelay: "100ms" }}>
+              <h1 className="text-[46px] md:text-[68px] lg:text-[82px] leading-[1.02] text-white">
                 {heroHeading}<br />
                 <span className="text-accent">{heroHeadingAccent}</span>
               </h1>
-            </Reveal>
+            </div>
 
-            <Reveal delay={200}>
-              <p className="mt-7 text-[19px] md:text-[22px] leading-relaxed text-white/85 max-w-[620px]">
+            <div className="rm-fade-in" style={{ animationDelay: "200ms" }}>
+              <p className="mt-7 text-[19px] md:text-[22px] leading-relaxed text-white/85 max-w-[640px]">
                 {heroSubtext}
               </p>
-            </Reveal>
+            </div>
 
-            <Reveal delay={300}>
+            <div className="rm-fade-in" style={{ animationDelay: "300ms" }}>
               <div className="mt-10 flex flex-wrap gap-4">
                 <a
                   href="#anmeldung"
@@ -169,9 +209,9 @@ function HomePage() {
                   {CONTACT.phone}
                 </a>
               </div>
-            </Reveal>
+            </div>
 
-            <Reveal delay={450}>
+            <div className="rm-fade-in" style={{ animationDelay: "450ms" }}>
               <ul className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-[15px] text-white/85 max-w-xl">
                 {heroTrustBadges.map((t) => (
                   <li key={t} className="flex items-center gap-2.5">
@@ -182,44 +222,32 @@ function HomePage() {
                   </li>
                 ))}
               </ul>
-            </Reveal>
+            </div>
           </div>
         </div>
 
         {/* Floating trust card */}
-        <Reveal delay={600} variant="right" className="hidden lg:block absolute right-8 xl:right-16 bottom-24 z-10">
+        <div className="rm-fade-in hidden lg:block absolute right-8 xl:right-16 bottom-24 z-10" style={{ animationDelay: "600ms" }}>
           <div className="bg-surface/95 backdrop-blur-md border border-white/30 rounded-2xl shadow-lift px-6 py-5 max-w-[280px]">
             <div className="flex items-center gap-0.5 text-accent">
-              {[0, 1, 2, 3].map((i) => (
-                <span key={i} className="text-[18px]">★</span>
+              {[1, 2, 3, 4, 5].map((i) => (
+                <span key={i} className="relative inline-block text-[18px]">
+                  <span className="text-foreground/20">★</span>
+                  <span className="absolute inset-0 overflow-hidden text-accent" style={{ width: `${Math.max(0, Math.min(1, rating - (i - 1))) * 100}%` }}>★</span>
+                </span>
               ))}
-              <span className="relative inline-block text-[18px]">
-                <span className="text-foreground/20">★</span>
-                <span className="absolute inset-0 overflow-hidden w-[50%] text-accent">★</span>
-              </span>
-              <span className="ml-1 text-[13px] font-semibold text-foreground/60">4.5</span>
+              <span className="ml-1 text-[13px] font-semibold text-foreground/60">{rating.toFixed(1)}</span>
             </div>
             <p className="mt-2 text-[15px] font-semibold text-[oklch(0.24_0.005_100)]">
               «{heroTrustCardQuote}»
             </p>
             <p className="mt-1 text-sm text-muted-foreground">{heroTrustCardAttribution}</p>
           </div>
-        </Reveal>
-      </section>
-
-      {/* ==================== TRUST STRIP ==================== */}
-      <section className="py-8 border-y border-border bg-surface">
-        <div className="rm-container">
-          <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-[14px] font-medium text-muted-foreground uppercase tracking-[0.14em]">
-            {TRUST_POINTS.map((t) => (
-              <span key={t} className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                {t}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
+
+      {/* ==================== REZENSIONEN (direkt unter dem Hero) ==================== */}
+      <ReviewSlider reviews={reviews} eyebrow={reviewsEyebrow} heading={reviewsHeading} />
 
       {/* ==================== SERVICES ==================== */}
       <section className="py-20 md:py-28 bg-surface-alt relative overflow-hidden">
@@ -230,7 +258,7 @@ function HomePage() {
               <p className="rm-eyebrow mb-4">{servicesEyebrow}</p>
             </Reveal>
             <Reveal delay={100}>
-              <h2 className="text-[32px] md:text-[48px] font-semibold leading-[1.1]">
+              <h2 className="text-[34px] md:text-[50px] leading-[1.08]">
                 {servicesHeading}
               </h2>
             </Reveal>
@@ -267,11 +295,12 @@ function HomePage() {
               <div className="rm-zoom relative rounded-2xl overflow-hidden shadow-card border border-border aspect-[5/4]">
                 <img
                   src={livingRoom}
-                  alt="Pflegerin und Klientin im hellen Wohnzimmer"
+                  alt="Pflegefachfrau der Spitex Riviera Med im Gespräch mit einer Klientin im Wohnzimmer in Thun"
                   className="h-full w-full object-cover rm-zoom-img"
                   loading="lazy"
-                  width={1280}
-                  height={896}
+                  decoding="async"
+                  width={1600}
+                  height={1060}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent pointer-events-none" />
               </div>
@@ -279,7 +308,7 @@ function HomePage() {
 
             <Reveal variant="right" delay={120}>
               <p className="rm-eyebrow mb-4">{whyEyebrow}</p>
-              <h2 className="text-[32px] md:text-[44px] font-semibold leading-[1.1]">
+              <h2 className="text-[34px] md:text-[46px] leading-[1.08]">
                 {whyHeading}<br /><span className="text-primary">{whyHeadingAccent}</span>
               </h2>
               <p className="mt-5 text-[18px] text-foreground/75 leading-relaxed">{whySubtext}</p>
@@ -301,66 +330,38 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ==================== LANDSCAPE PARALLAX BAND ==================== */}
-      <section
-        className="relative flex items-center justify-center min-h-[340px] md:min-h-[420px] overflow-hidden"
-        style={{
-          backgroundImage: `linear-gradient(180deg, oklch(0.24 0.04 175 / 0.75), oklch(0.30 0.04 175 / 0.75)), url(${landscape})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-        }}
-      >
+      {/* ==================== LANDSCAPE BAND ==================== */}
+      <section className="relative flex items-center justify-center min-h-[340px] md:min-h-[420px] overflow-hidden">
+        <img
+          src={landscape}
+          alt="Thunersee mit Bergpanorama – Einsatzgebiet der Spitex Riviera Med im Berner Oberland"
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+          width={1920}
+          height={1281}
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, oklch(0.24 0.04 175 / 0.75), oklch(0.30 0.04 175 / 0.75))" }}
+          aria-hidden
+        />
         <div className="rm-container relative text-white text-center max-w-2xl py-16">
           <Reveal>
             <p className="text-accent font-semibold tracking-[0.18em] uppercase text-[13px] mb-5">
               {landscapeEyebrow}
             </p>
-            <h2 className="text-[34px] md:text-[52px] font-semibold leading-[1.1] text-white">
+            <h2 className="text-[36px] md:text-[54px] leading-[1.08] text-white">
               {landscapeHeading}
             </h2>
           </Reveal>
         </div>
       </section>
 
-      {/* ==================== TESTIMONIALS ==================== */}
-      <section className="py-20 md:py-28 bg-surface-alt">
-        <div className="rm-container">
-          <div className="max-w-2xl mb-14">
-            <Reveal>
-              <p className="rm-eyebrow mb-4">{testimonialsEyebrow}</p>
-            </Reveal>
-            <Reveal delay={100}>
-              <h2 className="text-[32px] md:text-[44px] font-semibold leading-tight">
-                {testimonialsHeading}
-              </h2>
-            </Reveal>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <Reveal key={t.author} delay={i * 120}>
-                <figure className="group relative bg-surface border border-border rounded-2xl p-8 flex flex-col h-full rm-lift overflow-hidden">
-                  <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-primary via-accent to-primary origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" aria-hidden />
-                  <svg className="h-9 w-9 text-accent mb-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                    <path d="M7.17 6A5.17 5.17 0 0 0 2 11.17V18h6.83v-6.83H5.34A1.83 1.83 0 0 1 7.17 9.34zm10 0A5.17 5.17 0 0 0 12 11.17V18h6.83v-6.83h-3.49A1.83 1.83 0 0 1 17.17 9.34z" />
-                  </svg>
-                  <blockquote className="text-[17px] leading-relaxed text-foreground/85 flex-1">«{t.quote}»</blockquote>
-                  <figcaption className="mt-6 pt-5 border-t border-border">
-                    <p className="font-semibold text-[oklch(0.24_0.005_100)]">{t.author}</p>
-                    <p className="text-sm text-muted-foreground">{t.role} · {t.location}</p>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ==================== PARTNERS ==================== */}
       <section className="py-14 bg-surface border-y border-border overflow-hidden">
         <p className="text-center text-[13px] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-10">
-          Vernetzt mit der Region
+          Vernetzt mit der Region Thun & Bern
         </p>
         <div className="relative">
           <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-surface to-transparent" />
@@ -387,7 +388,7 @@ function HomePage() {
               { src: "/logos/schlossapotheke-logo.jpeg",  alt: "Schloss Apotheke", href: "https://www.schlossapotheke.ch/" },
             ].map((p, i) => (
               <a key={i} href={p.href} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center mx-10 shrink-0 opacity-60 hover:opacity-100 transition-opacity duration-300" aria-label={p.alt}>
-                <img src={p.src} alt={p.alt} className="h-10 w-auto max-w-[140px] object-contain grayscale hover:grayscale-0 transition-all duration-300" />
+                <img src={p.src} alt={p.alt} loading="lazy" decoding="async" className="h-10 w-auto max-w-[140px] object-contain grayscale hover:grayscale-0 transition-all duration-300" />
               </a>
             ))}
           </div>
@@ -402,7 +403,7 @@ function HomePage() {
               <p className="rm-eyebrow mb-4">{faqEyebrow}</p>
             </Reveal>
             <Reveal delay={100}>
-              <h2 className="text-[32px] md:text-[44px] font-semibold leading-tight">{faqHeading}</h2>
+              <h2 className="text-[34px] md:text-[46px] leading-tight">{faqHeading}</h2>
             </Reveal>
           </div>
 
@@ -436,7 +437,7 @@ function HomePage() {
               <div className="absolute top-0 right-0 h-full w-2/3 bg-gradient-to-l from-accent/30 to-transparent pointer-events-none" />
               <div className="absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-accent/20 blur-3xl rm-float" aria-hidden />
               <div className="relative max-w-2xl">
-                <h2 className="text-[32px] md:text-[48px] font-semibold leading-[1.08] text-primary-foreground">
+                <h2 className="text-[34px] md:text-[50px] leading-[1.08] text-primary-foreground">
                   {ctaHeading}
                 </h2>
                 <p className="mt-5 text-[18px] md:text-[20px] text-primary-foreground/85 leading-relaxed">
@@ -445,7 +446,7 @@ function HomePage() {
                 <div className="mt-10 flex flex-wrap gap-4">
                   <a
                     href="#anmeldung"
-                  onClick={(e) => scrollToId(e, "anmeldung")}
+                    onClick={(e) => scrollToId(e, "anmeldung")}
                     className="group inline-flex h-[58px] items-center gap-2 px-7 rounded-md bg-accent text-accent-foreground text-[17px] font-semibold hover:bg-accent/90 transition-all hover:-translate-y-0.5 hover:shadow-lift"
                   >
                     {ctaButtonText}
@@ -469,17 +470,17 @@ function HomePage() {
         <div className="rm-container max-w-3xl">
           <div className="mb-10 text-center">
             <Reveal>
-              <p className="rm-eyebrow mb-4">Anmeldung</p>
+              <p className="rm-eyebrow mb-4">Anmeldung Spitex</p>
             </Reveal>
             <Reveal delay={100}>
-              <h2 className="text-[32px] md:text-[44px] font-semibold leading-tight">
+              <h2 className="text-[34px] md:text-[46px] leading-tight">
                 In zwei Minuten angemeldet.
               </h2>
             </Reveal>
             <Reveal delay={150}>
               <p className="mt-4 text-[18px] text-foreground/75">
                 Sie sagen uns, worum es geht – wir melden uns innerhalb von
-                24 Stunden mit einem Terminvorschlag.
+                24 Stunden mit einem Terminvorschlag für Ihr Erstgespräch zu Hause.
               </p>
             </Reveal>
           </div>

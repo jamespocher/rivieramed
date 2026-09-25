@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CONTACT } from "@/lib/contact";
-import { sanityClient, impressumQuery } from "@/lib/sanity";
+import { impressumQuery } from "@/lib/cms-queries";
+import { useCms } from "@/hooks/use-cms";
 
 type CmsData = {
   companyName?: string; street?: string; city?: string
@@ -9,14 +10,11 @@ type CmsData = {
 
 export const Route = createFileRoute("/impressum")({
   head: () => ({ meta: [{ title: "Impressum — Riviera Med" }] }),
-  loader: async (): Promise<CmsData | null> => {
-    try { return await sanityClient.fetch<CmsData>(impressumQuery) } catch { return null }
-  },
   component: ImpressumPage,
 });
 
 function ImpressumPage() {
-  const cms = Route.useLoaderData() ?? {};
+  const cms = useCms<CmsData>(impressumQuery) ?? {};
 
   const companyName = cms.companyName ?? "Riviera Med GmbH";
   const street = cms.street ?? CONTACT.street;
@@ -29,7 +27,7 @@ function ImpressumPage() {
   return (
     <section className="py-16 md:py-24">
       <div className="rm-container max-w-2xl">
-        <h1 className="text-[36px] md:text-[48px] font-semibold mb-6">Impressum</h1>
+        <h1 className="text-[36px] md:text-[48px] mb-6">Impressum</h1>
         <div className="space-y-2 text-foreground/85">
           <p><strong>{companyName}</strong></p>
           <p>{street}<br />{city}</p>

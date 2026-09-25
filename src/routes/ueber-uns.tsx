@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
-import { sanityClient, ueberUnsQuery } from "@/lib/sanity";
+import { ueberUnsQuery } from "@/lib/cms-queries";
+import { useCms } from "@/hooks/use-cms";
 
 type CmsMember = { name: string; role: string; bio?: string[] }
 type CmsData = {
@@ -17,9 +18,6 @@ export const Route = createFileRoute("/ueber-uns")({
       { name: "description", content: "Das Team hinter Riviera Med – Ihre Spitex in den Regionen Thun & Bern." },
     ],
   }),
-  loader: async (): Promise<CmsData | null> => {
-    try { return await sanityClient.fetch<CmsData>(ueberUnsQuery) } catch { return null }
-  },
   component: UeberUnsPage,
 });
 
@@ -46,7 +44,7 @@ function initials(name: string) {
 }
 
 function UeberUnsPage() {
-  const cms = Route.useLoaderData() ?? {};
+  const cms = useCms<CmsData>(ueberUnsQuery) ?? {};
 
   const eyebrow = cms.eyebrow ?? "Über uns";
   const heading = cms.heading ?? "Menschen, die sich kümmern.";
@@ -63,7 +61,7 @@ function UeberUnsPage() {
       <section className="py-16 md:py-24">
         <div className="rm-container max-w-3xl">
           <p className="rm-eyebrow mb-5">{eyebrow}</p>
-          <h1 className="text-[40px] md:text-[56px] font-semibold tracking-tight leading-[1.05]">{heading}</h1>
+          <h1 className="text-[40px] md:text-[56px] tracking-tight leading-[1.05]">{heading}</h1>
           <p className="mt-5 text-[19px] text-foreground/80">{subtext}</p>
           <div className="mt-10 grid grid-cols-2 gap-6 text-center sm:max-w-md">
             {stats.map(({ number, label }) => (
@@ -80,7 +78,7 @@ function UeberUnsPage() {
         <div className="rm-container">
           <Reveal>
             <p className="rm-eyebrow mb-4">{teamEyebrow}</p>
-            <h2 className="text-[32px] md:text-[44px] font-semibold tracking-tight leading-[1.1] max-w-2xl">{teamHeading}</h2>
+            <h2 className="text-[32px] md:text-[44px] tracking-tight leading-[1.1] max-w-2xl">{teamHeading}</h2>
             <p className="mt-4 text-[17px] text-foreground/75 max-w-2xl">{teamSubtext}</p>
           </Reveal>
 

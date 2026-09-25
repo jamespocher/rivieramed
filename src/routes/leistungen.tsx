@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Heart, Home, Moon, Activity, Sparkles, ArrowRight, type LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
-import { sanityClient, leistungenQuery } from "@/lib/sanity";
+import { leistungenQuery } from "@/lib/cms-queries";
+import { useCms } from "@/hooks/use-cms";
 
 type CmsData = {
   eyebrow?: string
@@ -20,9 +21,6 @@ export const Route = createFileRoute("/leistungen")({
       { property: "og:description", content: "Unsere Leistungen im Überblick." },
     ],
   }),
-  loader: async (): Promise<CmsData | null> => {
-    try { return await sanityClient.fetch<CmsData>(leistungenQuery) } catch { return null }
-  },
   component: LeistungenPage,
 });
 
@@ -36,7 +34,7 @@ const DEFAULT_ITEMS = [
 ];
 
 function LeistungenPage() {
-  const cms = Route.useLoaderData() ?? {};
+  const cms = useCms<CmsData>(leistungenQuery) ?? {};
   const eyebrow = cms.eyebrow ?? "Unsere Leistungen";
   const heading = cms.heading ?? "Ein Angebot, das sich Ihrem Leben anpasst.";
   const subtext = cms.subtext ?? "Von wenigen Stunden pro Woche bis zur 24-Stunden-Betreuung – wir stimmen unsere Einsätze auf Ihren Alltag ab.";
@@ -49,7 +47,7 @@ function LeistungenPage() {
     <section className="py-16 md:py-24">
       <div className="rm-container max-w-5xl">
         <p className="rm-eyebrow mb-5">{eyebrow}</p>
-        <h1 className="text-[40px] md:text-[56px] font-semibold tracking-tight leading-[1.05]">{heading}</h1>
+        <h1 className="text-[40px] md:text-[56px] tracking-tight leading-[1.05]">{heading}</h1>
         <p className="mt-5 text-[19px] text-foreground/80 max-w-2xl">{subtext}</p>
 
         <div className="mt-14 grid gap-6 md:grid-cols-2">
@@ -59,7 +57,7 @@ function LeistungenPage() {
                 <span className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-primary mb-5 transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 group-hover:rotate-[-6deg]">
                   <it.icon className="h-7 w-7" aria-hidden />
                 </span>
-                <h2 className="text-[22px] font-semibold mb-2">{it.title}</h2>
+                <h2 className="text-[22px] mb-2">{it.title}</h2>
                 <p className="text-foreground/75 leading-relaxed">{it.text}</p>
                 <Link to="/kontakt" className="mt-5 inline-flex items-center gap-1 text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                   Anfragen <ArrowRight className="h-4 w-4" />

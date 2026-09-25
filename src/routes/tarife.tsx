@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CONTACT } from "@/lib/contact";
 import { scrollToId } from "@/lib/scroll-to";
-import { sanityClient, tarifeQuery } from "@/lib/sanity";
+import { tarifeQuery } from "@/lib/cms-queries";
+import { useCms } from "@/hooks/use-cms";
 
 type Row = { label: string; unit: string; price: string; note?: string }
 type FinItem = { q: string; a: string }
@@ -23,9 +24,6 @@ export const Route = createFileRoute("/tarife")({
       { property: "og:description", content: "Transparente Preise für Pflege zu Hause." },
     ],
   }),
-  loader: async (): Promise<CmsData | null> => {
-    try { return await sanityClient.fetch<CmsData>(tarifeQuery) } catch { return null }
-  },
   component: TarifePage,
 });
 
@@ -81,7 +79,7 @@ function TableComp({ rows }: { rows: Row[] }) {
 }
 
 function TarifePage() {
-  const cms = Route.useLoaderData() ?? {};
+  const cms = useCms<CmsData>(tarifeQuery) ?? {};
 
   const eyebrow = cms.eyebrow ?? "Tarife & Finanzierung";
   const heading = cms.heading ?? "Transparente Preise. Ohne Überraschungen.";
@@ -110,7 +108,7 @@ function TarifePage() {
       <section className="pt-14 pb-10 md:pt-20 md:pb-14">
         <div className="rm-container max-w-3xl">
           <p className="rm-eyebrow mb-5">{eyebrow}</p>
-          <h1 className="text-[40px] md:text-[56px] font-semibold tracking-tight leading-[1.05]">{heading}</h1>
+          <h1 className="text-[40px] md:text-[56px] tracking-tight leading-[1.05]">{heading}</h1>
           <p className="mt-5 text-[19px] leading-relaxed text-foreground/80">{subtext}</p>
         </div>
       </section>
@@ -133,17 +131,17 @@ function TarifePage() {
       <section id="pflege" className="py-14 md:py-20 scroll-mt-[160px]">
         <div className="rm-container space-y-16">
           <div>
-            <h2 className="text-[26px] md:text-[32px] font-semibold mb-2">{pflegeHeading}</h2>
+            <h2 className="text-[26px] md:text-[32px] mb-2">{pflegeHeading}</h2>
             <p className="text-foreground/75 mb-6 max-w-2xl">{pflegeSubtext}</p>
             <TableComp rows={pflegeRows} />
           </div>
           <div id="haushalt" className="scroll-mt-[160px]">
-            <h2 className="text-[26px] md:text-[32px] font-semibold mb-2">{haushaltsHeading}</h2>
+            <h2 className="text-[26px] md:text-[32px] mb-2">{haushaltsHeading}</h2>
             <p className="text-foreground/75 mb-6 max-w-2xl">{haushaltsSubtext}</p>
             <TableComp rows={haushaltsRows} />
           </div>
           <div id="nacht" className="scroll-mt-[160px]">
-            <h2 className="text-[26px] md:text-[32px] font-semibold mb-2">{nachtHeading}</h2>
+            <h2 className="text-[26px] md:text-[32px] mb-2">{nachtHeading}</h2>
             <p className="text-foreground/75 mb-6 max-w-2xl">{nachtSubtext}</p>
             <TableComp rows={nachtRows} />
           </div>
@@ -152,7 +150,7 @@ function TarifePage() {
 
       <section id="finanzierung" className="py-14 md:py-20 bg-surface-alt scroll-mt-[160px]">
         <div className="rm-container max-w-3xl">
-          <h2 className="text-[26px] md:text-[32px] font-semibold mb-6">{finanzierungHeading}</h2>
+          <h2 className="text-[26px] md:text-[32px] mb-6">{finanzierungHeading}</h2>
           <div className="divide-y divide-border border-y border-border">
             {finanzierungItems.map((f) => (
               <details key={f.q} className="group py-5">
@@ -175,7 +173,7 @@ function TarifePage() {
         <div className="rm-container">
           <div className="rounded-2xl border border-border bg-surface p-8 md:p-12 flex flex-col md:flex-row gap-6 md:items-center justify-between">
             <div>
-              <h2 className="text-[24px] md:text-[28px] font-semibold">{ctaHeading}</h2>
+              <h2 className="text-[24px] md:text-[28px]">{ctaHeading}</h2>
               <p className="mt-2 text-foreground/75">{ctaSubtext}</p>
             </div>
             <div className="flex flex-wrap gap-3">

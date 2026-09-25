@@ -169,7 +169,7 @@ function JobsPage() {
         <div className="rm-container max-w-3xl">
           <Reveal>
             <p className="rm-eyebrow mb-5">Jobs bei Riviera Med</p>
-            <h1 className="text-[40px] md:text-[56px] font-semibold tracking-tight leading-[1.05]">
+            <h1 className="text-[40px] md:text-[56px] tracking-tight leading-[1.05]">
               Pflege, wie sie sein sollte.
             </h1>
             <p className="mt-5 text-[19px] text-foreground/80">
@@ -197,7 +197,7 @@ function JobsPage() {
         <div className="rm-container">
           <Reveal>
             <p className="rm-eyebrow mb-4">Warum bei uns</p>
-            <h2 className="max-w-2xl text-[30px] md:text-[40px] font-semibold leading-tight">
+            <h2 className="max-w-2xl text-[30px] md:text-[40px] leading-tight">
               Ein Arbeitsplatz mit Zeit und Nähe.
             </h2>
           </Reveal>
@@ -226,7 +226,7 @@ function JobsPage() {
         <div className="rm-container max-w-3xl">
           <Reveal>
             <p className="rm-eyebrow mb-5">Spontanbewerbung</p>
-            <h2 className="text-[32px] md:text-[44px] font-semibold tracking-tight leading-[1.1]">
+            <h2 className="text-[32px] md:text-[44px] tracking-tight leading-[1.1]">
               Werden Sie Teil unseres Teams.
             </h2>
             <p className="mt-5 text-[17px] text-foreground/80">

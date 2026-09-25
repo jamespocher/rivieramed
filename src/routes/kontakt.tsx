@@ -3,7 +3,8 @@ import { Phone, Mail, MapPin, MessageCircle, ShieldCheck, Briefcase } from "luci
 import { Reveal } from "@/components/site/Reveal";
 import { AnmeldeFormular } from "@/components/site/AnmeldeFormular";
 import { CONTACT } from "@/lib/contact";
-import { sanityClient, kontaktQuery } from "@/lib/sanity";
+import { kontaktQuery } from "@/lib/cms-queries";
+import { useCms } from "@/hooks/use-cms";
 
 type CmsData = {
   eyebrow?: string; heading?: string; subtext?: string
@@ -21,14 +22,11 @@ export const Route = createFileRoute("/kontakt")({
       },
     ],
   }),
-  loader: async (): Promise<CmsData | null> => {
-    try { return await sanityClient.fetch<CmsData>(kontaktQuery) } catch { return null }
-  },
   component: KontaktPage,
 });
 
 function KontaktPage() {
-  const cms = Route.useLoaderData() ?? {};
+  const cms = useCms<CmsData>(kontaktQuery) ?? {};
   const eyebrow = cms.eyebrow ?? "Kontakt & Anmeldung";
   const heading = cms.heading ?? "Lassen Sie uns sprechen.";
   const subtext = cms.subtext ?? "Sie suchen Pflege oder Betreuung für sich oder einen Angehörigen? Rufen Sie uns an, schreiben Sie uns – oder melden Sie sich gleich hier unten an. Das Erstgespräch bei Ihnen zu Hause ist kostenlos und unverbindlich.";
@@ -42,7 +40,7 @@ function KontaktPage() {
         <div className="rm-container max-w-3xl">
           <Reveal>
             <p className="rm-eyebrow mb-5">{eyebrow}</p>
-            <h1 className="text-[40px] md:text-[56px] font-semibold tracking-tight leading-[1.05]">
+            <h1 className="text-[40px] md:text-[56px] tracking-tight leading-[1.05]">
               {heading}
             </h1>
             <p className="mt-5 text-[19px] text-foreground/80">{subtext}</p>
@@ -131,7 +129,7 @@ function KontaktPage() {
         <div className="rm-container max-w-3xl">
           <Reveal>
             <p className="rm-eyebrow mb-5">{formEyebrow}</p>
-            <h2 className="text-[32px] md:text-[44px] font-semibold tracking-tight leading-[1.1]">
+            <h2 className="text-[32px] md:text-[44px] tracking-tight leading-[1.1]">
               {formHeading}
             </h2>
             <p className="mt-5 text-[17px] text-foreground/80">{formSubtext}</p>
