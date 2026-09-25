@@ -177,25 +177,14 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Grosse Titel: moderne, kursive Serif (Instrument Serif) */
-  h1, h2 {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 400;
-    color: oklch(0.24 0.005 100);
-    letter-spacing: -0.01em;
-    line-height: 1.05;
-    text-wrap: balance;
-  }
-
-  /* Untertitel, Karten- und Formular-Titel bleiben in der Grundschrift */
-  h3, h4, h5, h6 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
     color: oklch(0.24 0.005 100);
     font-weight: 600;
     letter-spacing: -0.02em;
-    line-height: 1.15;
+    line-height: 1.1;
   }
+  h1, h2 { text-wrap: balance; }
 
   .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
     color: oklch(0.96 0.005 100);
@@ -232,11 +221,15 @@
 
   .font-display { font-family: var(--font-display); }
 
+  /* Kleine Übertitel: kursive Serif (Instrument Serif) */
   .rm-eyebrow {
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
     color: var(--color-primary);
   }
 

@@ -173,13 +173,13 @@ function HomePage() {
         <div className="rm-container pt-20 pb-24 md:pt-28 md:pb-32 w-full">
           <div className="max-w-3xl text-white">
             <div className="rm-fade-in">
-              <p className="text-[13px] font-semibold tracking-[0.16em] uppercase text-accent mb-6">
+              <p className="rm-eyebrow text-accent text-[24px] mb-5">
                 {heroEyebrow}
               </p>
             </div>
 
             <div className="rm-fade-in" style={{ animationDelay: "100ms" }}>
-              <h1 className="text-[46px] md:text-[68px] lg:text-[82px] leading-[1.02] text-white">
+              <h1 className="text-[44px] md:text-[64px] lg:text-[76px] tracking-tight leading-[1.02] text-white">
                 {heroHeading}<br />
                 <span className="text-accent">{heroHeadingAccent}</span>
               </h1>
@@ -348,7 +348,7 @@ function HomePage() {
         />
         <div className="rm-container relative text-white text-center max-w-2xl py-16">
           <Reveal>
-            <p className="text-accent font-semibold tracking-[0.18em] uppercase text-[13px] mb-5">
+            <p className="rm-eyebrow text-accent text-[24px] mb-4">
               {landscapeEyebrow}
             </p>
             <h2 className="text-[36px] md:text-[54px] leading-[1.08] text-white">
@@ -360,7 +360,7 @@ function HomePage() {
 
       {/* ==================== PARTNERS ==================== */}
       <section className="py-14 bg-surface border-y border-border overflow-hidden">
-        <p className="text-center text-[13px] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-10">
+        <p className="rm-eyebrow text-center text-muted-foreground mb-10">
           Vernetzt mit der Region Thun & Bern
         </p>
         <div className="relative">
