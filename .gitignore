@@ -36,3 +36,6 @@ dist-ssr
 studio/node_modules/
 .vercel
 .env*
+
+# iCloud: echter Ordner, node_modules ist ein Symlink darauf
+node_modules.nosync/

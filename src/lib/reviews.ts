@@ -1,8 +1,8 @@
 /**
  * Rezensionen für den Slider direkt unter dem Hero.
  *
- * Hier die echten Bewertungen eintragen (z. B. aus Google). Reihenfolge =
- * Reihenfolge im Slider. `rating` 1–5, `source` optional (z. B. "Google").
+ * Quelle: Google-Rezensionen von Riviera Med (Stand September 2026).
+ * Reihenfolge = Reihenfolge im Slider. `rating` 1–5, `source` optional.
  * Der Slider zeigt automatisch den Durchschnitt aller Bewertungen an.
  */
 export type Review = {
@@ -18,27 +18,53 @@ export type Review = {
 export const REVIEWS: Review[] = [
   {
     quote:
-      "Mein Vater wollte um keinen Preis ins Heim. Riviera Med hat es möglich gemacht, dass er in seiner gewohnten Umgebung bleiben kann. Die Pflegerinnen sind einfühlsam und zuverlässig.",
-    author: "Sandra M.",
+      "Sehr freundliches und professionelles Team. Die Betreuung ist zuverlässig, herzlich und kompetent. Man fühlt sich jederzeit gut aufgehoben und ernst genommen. Vielen Dank für die tolle Unterstützung. Klare Empfehlung!",
+    author: "Abdow",
+    rating: 5,
+    source: "Google",
+    date: "2026",
+  },
+  {
+    quote:
+      "Im höchsten Grade vertrauenswürdig, liebenswert, einfühlsam und sehr kompetent. Dem gesamten Team möchte ich meinen Dank aussprechen für ihre Hilfsbereitschaft und das grosse Engagement.",
+    author: "Stefania Ardu",
+    rating: 5,
+    source: "Google",
+    date: "2026",
+  },
+  {
+    quote:
+      "Eine geniale Spitex – unsere Familie ist begeistert! Leni und sein Team ermöglichen meinem Vater eine fachlich und menschlich grandiose Betreuung daheim. Die Zusammenarbeit ist genial!",
+    author: "Franziska Rettenmund",
     role: "Tochter",
-    location: "Hilterfingen",
     rating: 5,
+    source: "Google",
+    date: "2024",
   },
   {
     quote:
-      "Nach meiner Hüftoperation brauchte ich jeden Tag Unterstützung. Das Team war stets pünktlich, freundlich und sehr professionell. Ich fühlte mich in besten Händen.",
-    author: "Heinz R.",
-    role: "Klient, 78",
-    location: "Thun",
+      "Mein Bruder wird von der Riviera Med Spitex versorgt und er findet, dass ihm da ein ganz grosser Glücksgriff gelungen sei.",
+    author: "mac scout",
+    role: "Bruder eines Klienten",
     rating: 5,
+    source: "Google",
+    date: "2022",
   },
   {
-    quote:
-      "Die transparente Preisgestaltung und die klare Beratung haben uns sofort überzeugt. Keine versteckten Kosten, offene Kommunikation – so muss es sein.",
-    author: "Margrit H.",
-    role: "Ehefrau",
-    location: "Spiez",
+    quote: "Ich war sehr zufrieden mit der Dienstleistung von der Riviera Med GmbH.",
+    author: "Heidi Kernen",
+    role: "Klientin",
     rating: 5,
+    source: "Google",
+    date: "2022",
+  },
+  {
+    quote: "Freundlich, sehr zuverlässig, kein Stress, hilfsbereit.",
+    author: "Erika Buhlmann",
+    role: "Klientin",
+    rating: 5,
+    source: "Google",
+    date: "2022",
   },
 ];
 

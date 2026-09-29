@@ -88,7 +88,7 @@ export function ReviewSlider({
             </h2>
           </div>
           <div className="flex items-center gap-3 shrink-0">
-            <span className="text-[34px] leading-none font-display italic text-[oklch(0.24_0.005_100)]">{avg.toFixed(1)}</span>
+            <span className="text-[34px] leading-none font-semibold tracking-tight text-[oklch(0.24_0.005_100)]">{avg.toFixed(1)}</span>
             <div className="flex flex-col gap-1">
               <Stars value={avg} />
               <span className="text-[13px] text-muted-foreground">

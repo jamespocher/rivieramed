@@ -109,8 +109,8 @@ function HomePage() {
   const heroSubtext = cms.heroSubtext ?? "Riviera Med ist Ihre private Spitex für Pflege und Betreuung zu Hause – in Thun, Bern, Spiez, Steffisburg und im ganzen Berner Oberland. Von allen Krankenkassen anerkannt, rund um die Uhr erreichbar.";
   const heroCtaText = cms.heroCtaText ?? "Erstgespräch vereinbaren";
   const heroTrustBadges = cms.heroTrustBadges ?? TRUST_POINTS;
-  const heroTrustCardQuote = cms.heroTrustCardQuote ?? "Ein kleines Team, das Zeit hat und wirklich zuhört.";
-  const heroTrustCardAttribution = cms.heroTrustCardAttribution ?? "Margrit H. · Spiez";
+  const heroTrustCardQuote = cms.heroTrustCardQuote ?? "Man fühlt sich jederzeit gut aufgehoben und ernst genommen.";
+  const heroTrustCardAttribution = cms.heroTrustCardAttribution ?? "Abdow · Google-Rezension";
 
   const servicesEyebrow = cms.servicesEyebrow ?? "Unsere Spitex-Leistungen";
   const servicesHeading = cms.servicesHeading ?? "Pflege und Betreuung, die sich Ihrem Leben anpasst.";
@@ -173,7 +173,7 @@ function HomePage() {
         <div className="rm-container pt-20 pb-24 md:pt-28 md:pb-32 w-full">
           <div className="max-w-3xl text-white">
             <div className="rm-fade-in">
-              <p className="rm-eyebrow text-accent text-[24px] mb-5">
+              <p className="rm-eyebrow text-accent mb-6">
                 {heroEyebrow}
               </p>
             </div>
@@ -348,7 +348,7 @@ function HomePage() {
         />
         <div className="rm-container relative text-white text-center max-w-2xl py-16">
           <Reveal>
-            <p className="rm-eyebrow text-accent text-[24px] mb-4">
+            <p className="rm-eyebrow text-accent mb-5">
               {landscapeEyebrow}
             </p>
             <h2 className="text-[36px] md:text-[54px] leading-[1.08] text-white">

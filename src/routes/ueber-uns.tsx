@@ -30,6 +30,7 @@ const DEFAULT_TEAM: CmsMember[] = [
   { name: "Florjan Mislimi", role: "Geschäftsführer · Fachmann Gesundheit EFZ" },
   { name: "Muad Amiin", role: "Geschäftsführer · Dipl. Pflegefachmann HF" },
   { name: "Lenell Brown", role: "Betriebsleiter · Fachmann Gesundheit EFZ" },
+  { name: "Norina Rifaj", role: "Dipl. Pflegefachfrau" },
   { name: "Dayana Romero", role: "Fachfrau Gesundheit" },
   { name: "Sara Boss", role: "Fachfrau Gesundheit" },
 ];
