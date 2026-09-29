@@ -31,8 +31,8 @@ const DEFAULT_TEAM: CmsMember[] = [
   { name: "Muad Amiin", role: "Geschäftsführer · Dipl. Pflegefachmann HF" },
   { name: "Lenell Brown", role: "Betriebsleiter · Fachmann Gesundheit EFZ" },
   { name: "Norina Rifaj", role: "Dipl. Pflegefachfrau" },
-  { name: "Dayana Romero", role: "Fachfrau Gesundheit" },
-  { name: "Sara Boss", role: "Fachfrau Gesundheit" },
+  { name: "Dayana R.", role: "Fachfrau Gesundheit" },
+  { name: "S. B.", role: "Fachfrau Gesundheit" },
 ];
 
 /** Initialen für das Namens-Monogramm (solange keine Porträts hinterlegt sind) */
