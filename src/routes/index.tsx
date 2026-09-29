@@ -3,7 +3,8 @@ import { Check, Heart, Home, Moon, Activity, Sparkles, Phone, ArrowRight, type L
 import livingRoom from "@/assets/vertrauen.webp";
 import landscape from "@/assets/thunersee.webp";
 import { Reveal } from "@/components/site/Reveal";
-import { ReviewSlider } from "@/components/site/ReviewSlider";
+import { ReviewSlider, Stars } from "@/components/site/ReviewSlider";
+import { AntwortBadge } from "@/components/site/AntwortBadge";
 import { AnmeldeFormular } from "@/components/site/AnmeldeFormular";
 import { CONTACT } from "@/lib/contact";
 import { scrollToId } from "@/lib/scroll-to";
@@ -148,7 +149,7 @@ function HomePage() {
   return (
     <>
       {/* ==================== HERO ==================== */}
-      <section className="relative min-h-[calc(92vh-88px)] flex items-center overflow-hidden">
+      <section className="relative -mt-[88px] min-h-[92vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <picture>
             <source media="(max-width: 767px)" srcSet={HERO_IMG_MOBILE} type="image/webp" />
@@ -170,7 +171,7 @@ function HomePage() {
           <div className="absolute bottom-10 -left-16 h-[300px] w-[300px] rounded-full bg-primary/40 blur-3xl" />
         </div>
 
-        <div className="rm-container pt-20 pb-24 md:pt-28 md:pb-32 w-full">
+        <div className="rm-container pt-[calc(88px+4rem)] pb-24 md:pt-[calc(88px+6rem)] md:pb-32 w-full">
           <div className="max-w-3xl text-white">
             <div className="rm-fade-in">
               <p className="rm-eyebrow text-accent mb-6">
@@ -191,8 +192,16 @@ function HomePage() {
               </p>
             </div>
 
+            <div className="rm-fade-in" style={{ animationDelay: "250ms" }}>
+              <div className="mt-7 inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 backdrop-blur px-4 py-2">
+                <Stars value={rating} size={18} emptyClassName="text-white/30" />
+                <span className="text-[15px] font-semibold text-white tabular-nums">{rating.toFixed(1)}</span>
+                <span className="text-[15px] text-white/80">bei Google · {reviews.length} Bewertungen</span>
+              </div>
+            </div>
+
             <div className="rm-fade-in" style={{ animationDelay: "300ms" }}>
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-wrap gap-4">
                 <a
                   href="#anmeldung"
                   onClick={(e) => scrollToId(e, "anmeldung")}
@@ -471,6 +480,9 @@ function HomePage() {
           <div className="mb-10 text-center">
             <Reveal>
               <p className="rm-eyebrow mb-4">Anmeldung Spitex</p>
+            </Reveal>
+            <Reveal delay={50}>
+              <div className="mb-6 flex justify-center"><AntwortBadge /></div>
             </Reveal>
             <Reveal delay={100}>
               <h2 className="text-[34px] md:text-[46px] leading-tight">

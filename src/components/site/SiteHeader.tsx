@@ -18,13 +18,12 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const scrolled = useScrolled(32);
 
-  // Die Kopfzeile ist immer deckend – so steht das Logo nie auf einer
-  // weissen Hilfsfläche und bleibt auf jeder Seite gleich lesbar.
+  // Kopfzeile im Liquid-Glass-Stil: transparent mit Blur, wird beim Scrollen
+  // leicht dichter, damit Text über Inhalten lesbar bleibt.
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 bg-surface/95 backdrop-blur-md border-b border-border ${
-        scrolled ? "shadow-soft" : ""
-      }`}
+      className="rm-glass fixed top-0 inset-x-0 z-40 transition-all duration-300"
+      data-scrolled={scrolled ? "true" : "false"}
     >
       <div className="rm-container flex h-[88px] items-center justify-between gap-6">
         <Link

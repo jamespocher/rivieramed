@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, MessageCircle, ShieldCheck, Briefcase } from "lucide-react";
 import { Reveal } from "@/components/site/Reveal";
 import { AnmeldeFormular } from "@/components/site/AnmeldeFormular";
+import { AntwortBadge } from "@/components/site/AntwortBadge";
 import { CONTACT } from "@/lib/contact";
 import { kontaktQuery } from "@/lib/cms-queries";
 import { useCms } from "@/hooks/use-cms";
@@ -129,6 +130,7 @@ function KontaktPage() {
         <div className="rm-container max-w-3xl">
           <Reveal>
             <p className="rm-eyebrow mb-5">{formEyebrow}</p>
+            <AntwortBadge className="mb-6" />
             <h2 className="text-[32px] md:text-[44px] tracking-tight leading-[1.1]">
               {formHeading}
             </h2>

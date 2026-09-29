@@ -10,14 +10,14 @@ type Props = {
   autoplayMs?: number;
 };
 
-function Stars({ value, size = 18 }: { value: number; size?: number }) {
+export function Stars({ value, size = 18, emptyClassName = "text-foreground/15" }: { value: number; size?: number; emptyClassName?: string }) {
   return (
     <span className="inline-flex items-center gap-0.5 text-accent" aria-label={`${value} von 5 Sternen`}>
       {[1, 2, 3, 4, 5].map((i) => {
         const fill = Math.max(0, Math.min(1, value - (i - 1)));
         return (
           <span key={i} className="relative inline-block" style={{ width: size, height: size }}>
-            <Star className="absolute inset-0 text-foreground/15" style={{ width: size, height: size }} fill="currentColor" strokeWidth={0} aria-hidden />
+            <Star className={`absolute inset-0 ${emptyClassName}`} style={{ width: size, height: size }} fill="currentColor" strokeWidth={0} aria-hidden />
             <span className="absolute inset-0 overflow-hidden" style={{ width: `${fill * 100}%` }}>
               <Star className="text-accent" style={{ width: size, height: size }} fill="currentColor" strokeWidth={0} aria-hidden />
             </span>
@@ -72,7 +72,7 @@ export function ReviewSlider({
 
   return (
     <section
-      className="py-14 md:py-20 bg-surface border-b border-border"
+      className="py-14 md:py-20 bg-surface-alt"
       aria-labelledby="rezensionen-heading"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -103,14 +103,17 @@ export function ReviewSlider({
             <div className="flex -ml-6 touch-pan-y">
               {reviews.map((r, i) => (
                 <div key={`${r.author}-${i}`} className="pl-6 min-w-0 shrink-0 grow-0 basis-full md:basis-1/2 lg:basis-1/3">
-                  <figure className="h-full bg-surface-alt border border-border rounded-2xl p-7 md:p-8 flex flex-col">
-                    <div className="flex items-center justify-between gap-4 mb-4">
+                  <figure className="rm-review-card relative h-full bg-surface rounded-3xl p-7 md:p-8 flex flex-col overflow-hidden">
+                    <svg className="absolute -top-2 right-6 h-20 w-20 text-accent/25" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path d="M7.17 6A5.17 5.17 0 0 0 2 11.17V18h6.83v-6.83H5.34A1.83 1.83 0 0 1 7.17 9.34zm10 0A5.17 5.17 0 0 0 12 11.17V18h6.83v-6.83h-3.49A1.83 1.83 0 0 1 17.17 9.34z" />
+                    </svg>
+                    <div className="relative flex items-center justify-between gap-4 mb-4">
                       <Stars value={r.rating} size={16} />
                       {r.source && (
-                        <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">{r.source}</span>
+                        <span className="relative rounded-full bg-surface-alt px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">{r.source}</span>
                       )}
                     </div>
-                    <blockquote className="text-[17px] leading-relaxed text-foreground/85 flex-1">«{r.quote}»</blockquote>
+                    <blockquote className="relative text-[17px] leading-relaxed text-foreground/85 flex-1">«{r.quote}»</blockquote>
                     <figcaption className="mt-6 pt-5 border-t border-border">
                       <p className="font-semibold text-[oklch(0.24_0.005_100)]">{r.author}</p>
                       <p className="text-sm text-muted-foreground">
