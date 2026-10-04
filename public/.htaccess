@@ -7,6 +7,19 @@
   RewriteCond %{HTTPS} off
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+  # ── www → ohne www (kanonische Adresse ist https://riviera-med.com) ──
+  RewriteCond %{HTTP_HOST} ^www\.riviera-med\.com$ [NC]
+  RewriteRule ^ https://riviera-med.com%{REQUEST_URI} [L,R=301]
+
+  # ── Weiterleitungen der alten Wix-Adressen (SEO, alte Links) ──
+  RewriteRule ^überuns/?$ /ueber-uns [L,R=301]
+  RewriteRule ^ueberuns/?$ /ueber-uns [L,R=301]
+  RewriteRule ^datenschutzerklärung/?$ /datenschutz [L,R=301]
+  RewriteRule ^datenschutzerklaerung/?$ /datenschutz [L,R=301]
+  RewriteRule ^besonderheiten/?$ /leistungen [L,R=301]
+  RewriteRule ^news/?$ / [L,R=301]
+  RewriteRule ^faq/?$ / [L,R=301]
+
   # ── SPA-Routing: alle Pfade auf index.html, echte Dateien direkt ──
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
