@@ -9,7 +9,7 @@ export default defineConfig({
     tanstackRouter({ autoCodeSplitting: true }),
     react(),
     tailwindcss(),
-    tsconfigPaths(),
+    tsconfigPaths({ projects: ["tsconfig.json"] }),
   ],
   build: {
     outDir: "dist",

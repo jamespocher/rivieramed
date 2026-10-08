@@ -39,3 +39,4 @@ studio/node_modules/
 
 # iCloud: echter Ordner, node_modules ist ein Symlink darauf
 node_modules.nosync/
+riviera-med-website.zip
