@@ -69,3 +69,6 @@
 
 # Verzeichnislisten aus
 Options -Indexes
+
+# Infomaniak-Standard: Git-Verzeichnisse nie ausliefern
+RedirectMatch 404 /\.git
