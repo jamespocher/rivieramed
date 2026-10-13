@@ -64,6 +64,7 @@
   AddType image/webp .webp
   AddType image/avif .avif
   AddType font/woff2 .woff2
+  AddType application/manifest+json .webmanifest
   AddType application/javascript .js .mjs
 </IfModule>
 
