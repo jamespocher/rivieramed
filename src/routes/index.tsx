@@ -38,8 +38,8 @@ const DEFAULT_FAQS = [
     a: "Wir sind in Thun, Bern, Spiez, Steffisburg, Hilterfingen, Oberhofen und im ganzen Berner Oberland für Sie da. Unser Sitz ist in Thun – kurze Wege sind uns wichtig.",
   },
   {
-    q: "Bietet Riviera Med auch Nachtwachen und Wochenenddienste an?",
-    a: "Ja. Wir sind 24 Stunden am Tag, 365 Tage im Jahr erreichbar. Nachtwachen, Sitzwachen, Wochenend- und Feiertagsdienste bis hin zur 24-Stunden-Betreuung sind ein fester Teil unseres Angebots.",
+    q: "Bietet Riviera Med auch Nachtwachen an?",
+    a: "Ja. Präsenz- und Sitzwachen sowie diplomierte Nachtpflege gehören zu unserem Angebot. Die Einsatzzeiten stimmen wir im Erstgespräch auf Ihre Situation und Ihren Alltag ab.",
   },
   {
     q: "Wer kommt zu uns nach Hause?",
@@ -54,12 +54,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Riviera Med ist Ihre private Spitex in Thun und Bern: professionelle Pflege, Betreuung, Hauswirtschaft, Nachtwachen und Physiotherapie zu Hause. Alle Krankenkassen anerkannt, 24/7 erreichbar. Kostenloses Erstgespräch.",
+          "Riviera Med ist Ihre private Spitex in Thun und Bern: professionelle Pflege, Betreuung, Hauswirtschaft, Nachtwachen und Physiotherapie zu Hause. Alle Krankenkassen anerkannt. Kostenloses Erstgespräch.",
       },
       { property: "og:title", content: "Spitex Thun & Bern – Professionelle Pflege mit Hand und Herz | Riviera Med" },
       {
         property: "og:description",
-        content: "Private Spitex für Pflege und Betreuung zu Hause in Thun, Bern und im Berner Oberland. Alle Krankenkassen anerkannt, rund um die Uhr erreichbar.",
+        content: "Private Spitex für Pflege und Betreuung zu Hause in Thun, Bern und im Berner Oberland. Alle Krankenkassen anerkannt, kostenloses Erstgespräch.",
       },
       { property: "og:image", content: "https://riviera-med.com/images/spitex-thun-pflege-zuhause-hero.webp" },
       {
@@ -85,14 +85,14 @@ const ICON_MAP: Record<string, LucideIcon> = { Heart, Home, Moon, Activity, Spar
 const DEFAULT_SERVICES = [
   { icon: Heart, title: "Pflege zu Hause", description: "Grund- und Behandlungspflege nach KLV bei Ihnen zu Hause: Wundversorgung, Medikamente richten, Mobilisation, Körperpflege. Über Ihre Krankenkasse abgerechnet." },
   { icon: Home, title: "Hauswirtschaft & Betreuung", description: "Einkaufen, Kochen, Reinigen, Wäsche und Begleitung im Alltag. Damit Sie in Thun, Bern oder im Berner Oberland selbstbestimmt in den eigenen vier Wänden bleiben." },
-  { icon: Moon, title: "Nachtwachen & 24-Stunden-Betreuung", description: "Präsenz- und Sitzwachen, diplomierte Nachtpflege und Betreuung rund um die Uhr. Für ruhige Nächte – für Sie und Ihre Angehörigen." },
+  { icon: Moon, title: "Nachtwachen", description: "Präsenz- und Sitzwachen sowie diplomierte Nachtpflege. Für ruhige Nächte – für Sie und Ihre Angehörigen." },
   { icon: Activity, title: "Physiotherapie zu Hause", description: "Therapie in Ihrem Zuhause nach Unfall, Operation oder bei chronischen Beschwerden – auf ärztliche Verordnung und von der Krankenkasse übernommen." },
   { icon: Sparkles, title: "Entlastung für pflegende Angehörige", description: "Stundenweise Einsätze, Ferienvertretung und Begleitung zu Arztterminen. Damit pflegende Angehörige durchatmen können." },
   { icon: Heart, title: "Beratung & Abklärung", description: "Kostenloses, unverbindliches Erstgespräch bei Ihnen zu Hause. Wir klären den Pflegebedarf ab und erstellen gemeinsam mit Ihnen einen individuellen Pflegeplan." },
 ];
 
 // Vertrauenspunkte im Hero
-const TRUST_POINTS = ["Spitex in Thun, Bern & Berner Oberland", "Alle Krankenkassen anerkannt", "24 Stunden erreichbar", "Kostenloses Erstgespräch"];
+const TRUST_POINTS = ["Spitex in Thun, Bern & Berner Oberland", "Alle Krankenkassen anerkannt", "Kleines, festes Team", "Kostenloses Erstgespräch"];
 
 const DEFAULT_WHY_BULLETS = [
   { title: "Kleines festes Team", description: "Sie lernen uns persönlich kennen – ohne wechselndes Personal." },
@@ -107,7 +107,7 @@ function HomePage() {
   const heroEyebrow = cms.heroEyebrow ?? "Spitex Thun & Bern";
   const heroHeading = cms.heroHeading ?? "Professionelle Pflege";
   const heroHeadingAccent = cms.heroHeadingAccent ?? "mit Hand und Herz.";
-  const heroSubtext = cms.heroSubtext ?? "Riviera Med ist Ihre private Spitex für Pflege und Betreuung zu Hause – in Thun, Bern, Spiez, Steffisburg und im ganzen Berner Oberland. Von allen Krankenkassen anerkannt, rund um die Uhr erreichbar.";
+  const heroSubtext = cms.heroSubtext ?? "Riviera Med ist Ihre private Spitex für Pflege und Betreuung zu Hause – in Thun, Bern, Spiez, Steffisburg und im ganzen Berner Oberland. Von allen Krankenkassen anerkannt, mit einem kleinen, festen Team.";
   const heroCtaText = cms.heroCtaText ?? "Erstgespräch vereinbaren";
   const heroTrustBadges = cms.heroTrustBadges ?? TRUST_POINTS;
   const heroTrustCardQuote = cms.heroTrustCardQuote ?? "Man fühlt sich jederzeit gut aufgehoben und ernst genommen.";
@@ -115,7 +115,7 @@ function HomePage() {
 
   const servicesEyebrow = cms.servicesEyebrow ?? "Unsere Spitex-Leistungen";
   const servicesHeading = cms.servicesHeading ?? "Pflege und Betreuung, die sich Ihrem Leben anpasst.";
-  const servicesSubtext = cms.servicesSubtext ?? "Von wenigen Stunden pro Woche bis zur 24-Stunden-Betreuung: Pflege, Hauswirtschaft, Nachtwache und Physiotherapie aus einer Hand – zu Hause in Thun, Bern und im Berner Oberland.";
+  const servicesSubtext = cms.servicesSubtext ?? "Von wenigen Stunden pro Woche bis zu täglichen Einsätzen: Pflege, Hauswirtschaft, Nachtwache und Physiotherapie aus einer Hand – zu Hause in Thun, Bern und im Berner Oberland.";
   const services = cms.services?.length
     ? cms.services.map((s) => ({ icon: ICON_MAP[s.icon] ?? Heart, title: s.title, description: s.description }))
     : DEFAULT_SERVICES;

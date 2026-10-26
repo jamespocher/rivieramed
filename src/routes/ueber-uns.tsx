@@ -22,7 +22,7 @@ export const Route = createFileRoute("/ueber-uns")({
 });
 
 const DEFAULT_STATS = [
-  { number: "24/7", label: "Erreichbar" },
+  { number: "5.0", label: "Google-Bewertung" },
   { number: "100%", label: "Krankenkassen" },
 ];
 

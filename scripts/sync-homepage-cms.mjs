@@ -21,14 +21,14 @@ const set = {
   heroHeading: "Professionelle Pflege",
   heroHeadingAccent: "mit Hand und Herz.",
   heroSubtext:
-    "Riviera Med ist Ihre private Spitex für Pflege und Betreuung zu Hause – in Thun, Bern, Spiez, Steffisburg und im ganzen Berner Oberland. Von allen Krankenkassen anerkannt, rund um die Uhr erreichbar.",
+    "Riviera Med ist Ihre private Spitex für Pflege und Betreuung zu Hause – in Thun, Bern, Spiez, Steffisburg und im ganzen Berner Oberland. Von allen Krankenkassen anerkannt, mit einem kleinen, festen Team.",
   heroTrustCardQuote: "Man fühlt sich jederzeit gut aufgehoben und ernst genommen.",
   heroTrustCardAttribution: "Abdow · Google-Rezension",
-  heroTrustBadges: ["Spitex in Thun, Bern & Berner Oberland", "Alle Krankenkassen anerkannt", "24 Stunden erreichbar", "Kostenloses Erstgespräch"],
+  heroTrustBadges: ["Spitex in Thun, Bern & Berner Oberland", "Alle Krankenkassen anerkannt", "Kleines, festes Team", "Kostenloses Erstgespräch"],
   servicesEyebrow: "Unsere Spitex-Leistungen",
   servicesHeading: "Pflege und Betreuung, die sich Ihrem Leben anpasst.",
   servicesSubtext:
-    "Von wenigen Stunden pro Woche bis zur 24-Stunden-Betreuung: Pflege, Hauswirtschaft, Nachtwache und Physiotherapie aus einer Hand – zu Hause in Thun, Bern und im Berner Oberland.",
+    "Von wenigen Stunden pro Woche bis zu täglichen Einsätzen: Pflege, Hauswirtschaft, Nachtwache und Physiotherapie aus einer Hand – zu Hause in Thun, Bern und im Berner Oberland.",
   whySubtext:
     "Wir sind eine kleine, private Spitex mit festem Team. Das bedeutet: Sie sehen immer bekannte Gesichter, und wir nehmen uns die Zeit, die gute Pflege zu Hause braucht.",
   whyBullets: [

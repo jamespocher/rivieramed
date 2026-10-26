@@ -37,7 +37,7 @@ function LeistungenPage() {
   const cms = useCms<CmsData>(leistungenQuery) ?? {};
   const eyebrow = cms.eyebrow ?? "Unsere Leistungen";
   const heading = cms.heading ?? "Ein Angebot, das sich Ihrem Leben anpasst.";
-  const subtext = cms.subtext ?? "Von wenigen Stunden pro Woche bis zur 24-Stunden-Betreuung – wir stimmen unsere Einsätze auf Ihren Alltag ab.";
+  const subtext = cms.subtext ?? "Von wenigen Stunden pro Woche bis zu täglichen Einsätzen – wir stimmen unsere Einsätze auf Ihren Alltag ab.";
   const ctaText = cms.ctaText ?? "Unverbindlich anfragen";
   const items = cms.items?.length
     ? cms.items.map((it) => ({ icon: ICON_MAP[it.icon] ?? Heart, title: it.title, text: it.text }))

@@ -12,7 +12,7 @@ export function SiteFooter() {
             <Logo height={42} variant="weiss" />
           </div>
           <p className="text-[15px] leading-relaxed text-[oklch(0.78_0.005_100)]">
-            Spitex in den Regionen Thun & Bern. Pflege und Betreuung zu Hause – kompetent, herzlich, rund um die Uhr.
+            Spitex in den Regionen Thun & Bern. Pflege und Betreuung zu Hause – kompetent und herzlich.
           </p>
         </div>
 
@@ -61,7 +61,6 @@ export function SiteFooter() {
               <span>{CONTACT.street}<br />{CONTACT.city}</span>
             </li>
           </ul>
-          <p className="mt-4 text-[13px] text-[oklch(0.70_0.005_100)]">24/7 · 365 Tage im Jahr</p>
         </div>
       </div>
 
